@@ -1,0 +1,44 @@
+<div class="container">
+    <h3>Get Branch Manager from Branch</h3>
+    <form #addData="ngForm" (ngSubmit)="getBranchManager(addData)">
+      <div class="form-group">
+        <label for="branch">Branch</label>
+        <select
+          class="form-control"
+          id="branch"
+          required
+  
+          ngModel
+          name="id"
+          #id="ngModel"
+        >
+          <option disabled selected value>Select Branch</option>
+          <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br>
+
+    <h3 *ngIf="result">Branch Manger Details</h3>
+    <table class="table" *ngIf="result">
+      <thead>
+        <tr class="table-active">
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Assigned Branch</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let m of result">
+          <th>{{m.id}}</th>
+          <td>{{m.name}}</td>
+          <td>{{m.email}}</td>
+          <td>{{m.branch.id}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  

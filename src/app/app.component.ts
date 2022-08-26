@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from './Services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,27 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Food-App';
+
+  constructor(private service:UserService) {}
+  username = this.service.getName();
+
+  isLoggedIn() {
+    return this.service.isLoggedIn();
+  }
+
+  isAdmin() {
+    return this.service.isAdmin();
+  }
+
+  isBranchManager() {
+    return this.service.isBranchManager();
+  }
+
+  isStaff() {
+    return this.service.isStaff();
+  }
+
+  logOut() {
+    this.service.logOut();
+  }
 }

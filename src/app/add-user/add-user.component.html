@@ -1,0 +1,79 @@
+<div class="container">
+  <h3 *ngIf="checkAdmin">Add User</h3>
+  <h3 *ngIf="checkBranchManager">Add Staff</h3>
+  <form #addData="ngForm" (ngSubmit)="addUser(addData)">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter The User Name"
+        id="name"
+        required
+
+        ngModel
+        name="name"
+        #name="ngModel"
+      />
+
+      <label for="email">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        placeholder="Enter The User Email"
+        id="email"
+        required
+
+        ngModel
+        name="email"
+        #email="ngModel"
+      />
+
+      <label for="password">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        placeholder="Enter The User Password"
+        id="password"
+        required
+
+        ngModel
+        name="password"
+        #password="ngModel"
+      />
+
+      <label for="role" *ngIf="checkAdmin">Role &nbsp;</label>
+      <select
+        class="form-control"
+        *ngIf="checkAdmin"
+        id="role"
+        required
+
+        ngModel
+        name="role"
+        #role="ngModel"
+      >
+        <option disabled selected value>Select Role</option>
+        <option>Admin</option>
+        <option>Branch Manager</option>
+        <option>Staff</option>
+      </select>
+
+      <label for="branch" *ngIf="checkAdmin">Branch Id</label>
+      <select
+        class="form-control"
+        *ngIf="checkAdmin"
+        id="branch"
+        required
+
+        ngModel
+        name="branch"
+        #branch="ngModel"
+      >
+        <option disabled selected value>Select Branch</option>
+        <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
