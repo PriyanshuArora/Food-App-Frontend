@@ -10,12 +10,14 @@ import { EditUserComponent } from './edit-user/edit-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { ManagerListComponent } from './manager-list/manager-list.component';
 import { AddBranchComponent } from './add-branch/add-branch.component';
-import { BranchListComponent } from './branch-list/branch-list.component';
 import { AddFoodComponent } from './add-food/add-food.component';
 import { AddMenuComponent } from './add-menu/add-menu.component';
 import { AddFoodorderComponent } from './add-foodorder/add-foodorder.component';
 import { BranchManagerListComponent } from './branch-manager-list/branch-manager-list.component';
 import { EditBranchComponent } from './edit-branch/edit-branch.component';
+import { ListUserComponent } from './list-user/list-user.component';
+import { UserListPipe } from './Pipes/user-list.pipe';
+import { ListBranchComponent } from './list-branch/list-branch.component';
 
 @NgModule({
   declarations: [
@@ -25,12 +27,14 @@ import { EditBranchComponent } from './edit-branch/edit-branch.component';
     LoginUserComponent,
     ManagerListComponent,
     AddBranchComponent,
-    BranchListComponent,
     AddFoodComponent,
     AddMenuComponent,
     AddFoodorderComponent,
     BranchManagerListComponent,
-    EditBranchComponent
+    EditBranchComponent,
+    ListUserComponent,
+    UserListPipe,
+    ListBranchComponent
   ],
   imports: [
     BrowserModule,

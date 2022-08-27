@@ -1,1 +1,61 @@
-<p>edit-branch works!</p>
+<div class="container">
+    <h3>Update Branch</h3>
+    <form #addData="ngForm" (ngSubmit)="updateBranch(addData)">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter The Branch Name"
+          id="name"
+          
+          ngModel
+          name="name"
+          #name="ngModel"
+          [(ngModel)]="selectedBranch.name"
+        />
+  
+        <label for="city">City</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter The Branch City"
+          id="city"
+          
+          ngModel
+          name="city"
+          #city="ngModel"
+          [(ngModel)]="selectedBranch.city"
+        />
+  
+        <label for="phone">Phone</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Enter The Branch Phone Number"
+          id="phone"
+          
+          ngModel
+          name="phone"
+          #phone="ngModel"
+          [(ngModel)]="selectedBranch.phone"
+        />
+          
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter The Branch Email"
+          id="email"
+          
+          ngModel
+          name="email"
+          #email="ngModel"
+          [(ngModel)]="selectedBranch.email"
+        />
+
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  

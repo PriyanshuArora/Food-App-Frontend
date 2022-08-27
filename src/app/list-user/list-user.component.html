@@ -1,0 +1,73 @@
+<div class="container">
+  <h3 *ngIf="checkAdmin">User Details</h3>
+  <h3 *ngIf="checkBranchManager">Staff Details</h3>
+
+  <form #addData="ngForm" (ngSubmit)="getUser(addData)" class="input-group" *ngIf="checkAdmin">
+    <input
+      type="text"
+      class="form-control btn-outline-secondary"
+      aria-label="Text input with dropdown button"
+      placeholder="Enter The User/Branch id to find by id"
+      id="id"
+      required
+      ngModel
+      name="id"
+      #id="ngModel"
+    />
+    <div class="input-group-append">
+      <select
+        class="btn btn-outline-secondary form-select"
+        id="branch"
+        required
+        ngModel
+        name="choice"
+        #choice="ngModel"
+      >
+        <option value selected disabled hidden>Filter options</option>
+        <option value="all">All Users</option>
+        <option value="Branch Manager">Branch Managers</option>
+        <option value="Staff">Staffs</option>
+        <option value="bid">Branch Managers By Id</option>
+        <option value="uid">User By Id</option>
+      </select>
+      <button type="submit" class="btn btn-outline-secondary">Submit</button>
+    </div>
+  </form>
+
+  <br *ngIf="checkAdmin"/>
+  <table class="table">
+    <thead>
+      <tr class="table-active">
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Assigned Branch</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of list.t | userList: value:option">
+        <th>{{ u.id }}</th>
+        <td>{{ u.name }}</td>
+        <td>{{ u.email }}</td>
+        <td *ngIf="u.branch == null"></td>
+        <td *ngIf="u.branch != null">{{ u.branch.id }}</td>
+        
+        <td *ngIf="checkAdmin">
+          <button class="btn btn-primary" type="button" [routerLink]="['/edituser/',u.id]">Edit</button>
+        </td>
+        <td *ngIf="checkBranchManager">
+          <button *ngIf="u.role != 'Branch Manager'" class="btn btn-primary" type="button" [routerLink]="['/edituser/',u.id]">Edit</button>
+        </td>
+
+        <td *ngIf="checkAdmin">
+          <button class="btn btn-secondary" type="button" (click)="deleteUser(u.id)">Delete</button>
+        </td>
+        <td *ngIf="checkBranchManager">
+          <button *ngIf="u.role != 'Branch Manager'" class="btn btn-secondary" type="button" (click)="deleteUser(u.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

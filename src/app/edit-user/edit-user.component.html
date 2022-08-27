@@ -1,1 +1,86 @@
-<p>edit-user works!</p>
+<div class="container">
+    <h3 *ngIf="checkAdmin">Update User</h3>
+    <h3 *ngIf="checkBranchManager">Update Staff</h3>
+    <form #addData="ngForm" (ngSubmit)="updateUser(addData)">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter The User Name"
+          id="name"
+          required
+  
+          ngModel
+          name="name"
+          #name="ngModel"
+          [(ngModel)]="selectedUser.name"
+        />
+  
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter The User Email"
+          id="email"
+          required
+  
+          ngModel
+          name="email"
+          #email="ngModel"
+          [(ngModel)]="selectedUser.email"
+        />
+  
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Enter The User Password"
+          id="password"
+          required
+  
+          ngModel
+          name="password"
+          #password="ngModel"
+        />
+
+        <div *ngIf="selectedUser.branch != null">   
+          <label for="role" *ngIf="checkAdmin">Role &nbsp;</label>
+          <select
+            class="form-control"
+            *ngIf="checkAdmin"
+            id="role"
+            required
+    
+            ngModel
+            name="role"
+            #role="ngModel"
+            [(ngModel)]="selectedUser.role"
+          >
+            <option disabled selected value>Select Role</option>
+            <option>Admin</option>
+            <option>Branch Manager</option>
+            <option>Staff</option>
+          </select>
+        
+          <label for="branch" *ngIf="checkAdmin">Branch Id</label>
+          <select
+            class="form-control"
+            *ngIf="checkAdmin"
+            id="branch"
+            required
+    
+            ngModel
+            name="branch"
+            #branch="ngModel"
+            [(ngModel)]="selectedUser.branch.id"
+          >
+            <option disabled selected value>Select Branch</option>
+            <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  

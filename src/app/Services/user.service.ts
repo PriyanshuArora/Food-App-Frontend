@@ -112,4 +112,17 @@ export class UserService {
     return this.http.get(`http://localhost:8080/branchmanagerbybranch/${id}`);
   }
 
+  getUserList() {
+    return this.http.get("http://localhost:8080/alluser");
+  }
+
+  // Deleting user to the server using http delete method
+  deleteUser(id: any) {
+    return this.http.delete(`http://localhost:8080/deleteuser/${id}`);
+  }
+
+  // Editing user to the server using http put method
+  editUser(id: any, user: any) {
+    return this.http.put(`http://localhost:8080/updateuser/${id}`, user);
+  }
 }

@@ -5,10 +5,11 @@ import { AddFoodComponent } from './add-food/add-food.component';
 import { AddFoodorderComponent } from './add-foodorder/add-foodorder.component';
 import { AddMenuComponent } from './add-menu/add-menu.component';
 import { AddUserComponent } from './add-user/add-user.component'; 
-import { BranchListComponent } from './branch-list/branch-list.component';
 import { BranchManagerListComponent } from './branch-manager-list/branch-manager-list.component';
 import { EditBranchComponent } from './edit-branch/edit-branch.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { ListBranchComponent } from './list-branch/list-branch.component';
+import { ListUserComponent } from './list-user/list-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { ManagerListComponent } from './manager-list/manager-list.component';
 
@@ -19,13 +20,14 @@ const routes: Routes = [
   {path:"addmenu",component:AddMenuComponent},
   {path:"addorder",component:AddFoodorderComponent},
 
-  {path:"edituser",component:EditUserComponent},
-  {path:"editbranch",component:EditBranchComponent},
+  {path:"edituser/:id",component:EditUserComponent},
+  {path:"editbranch/:id",component:EditBranchComponent},
 
   {path:"loginuser",component:LoginUserComponent},
 
+  {path:"userlist",component:ListUserComponent},
   {path:"managerlist",component:ManagerListComponent},
-  {path:"branchlist",component:BranchListComponent}, 
+  {path:"branchlist",component:ListBranchComponent}, 
   {path:"branchmanagerlist",component:BranchManagerListComponent}
 ];
 

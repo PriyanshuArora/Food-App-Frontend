@@ -20,6 +20,7 @@
           List Service
         </a>
         <div class="dropdown-menu">
+          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="userlist">User List</a>
           <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="managerlist">Manager List</a>
           <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="branchmanagerlist">Manager by Branch List</a>
           <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="branchlist">Branch List</a>
@@ -37,24 +38,16 @@
         </div>
       </li>
 
-      <li class="nav-item dropdown" *ngIf="isAdmin()">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          Update Service
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="edituser">Update User Details</a>
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="editbranch">Update Branch Details</a>
-        </div>
-      </li>
-
       <!-- Branch Manager Services -->
       <li class="nav-item dropdown" *ngIf="isBranchManager()">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
           List Service
         </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="managerlist">Manager List</a>
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="branchlist">Branch List</a>
+          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="userlist">Staff List</a>
+          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="foodlist">Food List</a>
+          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="menulist">Menu List</a>
+          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="orderlist">FoodOrder List</a>
         </div>
       </li>
 
@@ -69,20 +62,7 @@
         </div>
       </li>
 
-      <li class="nav-item dropdown" *ngIf="isBranchManager()">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          Update Service
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="managerlist">Manager List</a>
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="branchlist">Branch List</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="adduser">Add Staff</a>
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="addfood">Add Food</a>
-          <a class="dropdown-item" *ngIf="isLoggedIn()" routerLink="addmenu">Add Menu</a>
-        </div>
-      </li>
-
+      <!-- Staff Services -->
       <li class="nav-item dropdown" *ngIf="isStaff()">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
           Staff Options

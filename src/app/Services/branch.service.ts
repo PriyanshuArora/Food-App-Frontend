@@ -18,4 +18,13 @@ export class BranchService {
     return this.http.get("http://localhost:8080/allbranch");
   }
   
+  // Deleting user to the server using http delete method
+  deleteBranch(id: any) {
+    return this.http.delete(`http://localhost:8080/deletebranch/${id}`);
+  }
+
+  // Editing user to the server using http put method
+  editBranch(id: any, branch: any) {
+    return this.http.put(`http://localhost:8080/updatebranch/${id}`, branch);
+  }
 }
