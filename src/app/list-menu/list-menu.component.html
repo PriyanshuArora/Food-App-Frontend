@@ -1,0 +1,46 @@
+<div class="container">
+    <h3>Menu Details</h3>
+    <table class="table">
+      <thead>
+        <tr class="table-active">
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          <th scope="col" *ngIf="checkAdmin">Branch</th>
+          <th scope="col">Foods</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="checkAdmin">
+        <tr *ngFor="let b of result.t">
+          <th>{{ b.id }}</th>
+          <td>{{ b.name }}</td>
+          <td>{{ b.category }}</td>
+          <td>{{ b.branch.id }}</td>
+          <td>
+            <table>
+              <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
+            </table>
+          </td>
+          <td><button class="btn btn-primary" type="button" [routerLink]="['/editmenu/',b.id]">Edit</button></td>
+          <td><button class="btn btn-secondary" type="button" (click)="deleteMenu(b.id)">Delete</button></td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="checkBranchManager">
+        <tr *ngFor="let b of result.t | filterByBranch">
+          <th>{{ b.id }}</th>
+          <td>{{ b.name }}</td>
+          <td>{{ b.category }}</td>
+          <td>
+            <table>
+              <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
+            </table>
+          </td>
+          <td><button class="btn btn-primary" type="button" [routerLink]="['/editmenu/',b.id]">Edit</button></td>
+          <td><button class="btn btn-secondary" type="button" (click)="deleteMenu(b.id)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+  

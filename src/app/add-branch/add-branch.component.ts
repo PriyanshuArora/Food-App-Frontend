@@ -14,10 +14,6 @@ export class AddBranchComponent implements OnInit {
   constructor(private branch:BranchService, private user:UserService, private router:Router) { }
 
   ngOnInit(): void {
-    if(!this.user.isLoggedIn()) {
-      window.alert("You are not authorised to access this page, please log in.");
-      this.router.navigate(['loginuser']);
-    }
     if(this.user.getRole() != "Admin") {
       window.alert("You are not authorised to access this page.");
       this.router.navigate(['']);

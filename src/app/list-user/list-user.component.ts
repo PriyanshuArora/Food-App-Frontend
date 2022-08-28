@@ -20,10 +20,6 @@ export class ListUserComponent implements OnInit {
   checkBranchManager = this.user.isBranchManager();
 
   ngOnInit(): void {
-    if(!this.user.isLoggedIn()) {
-      window.alert("You are not authorised to access this page, please log in.");
-      this.router.navigate(['loginuser']);
-    }
     if(this.role == "Staff") {
       window.alert("You are not authorised to access this page.");
       this.router.navigate(['']);
@@ -62,9 +58,11 @@ export class ListUserComponent implements OnInit {
   deleteUser(id:any) {
     this.user.deleteUser(id).subscribe((res)=>{
       // this.router.navigate(['products']);
-      this.user.getUserList().subscribe((res)=>{
-          this.list = res;
-        })
+      // this.user.getUserList().subscribe((res)=>{
+      //     this.list = res;
+      //   })
+      window.alert("User deleted successfully!");
+      this.ngOnInit();
     },(err)=>{
       console.log(err);
       window.alert(err.message);

@@ -18,6 +18,14 @@ import { EditBranchComponent } from './edit-branch/edit-branch.component';
 import { ListUserComponent } from './list-user/list-user.component';
 import { UserListPipe } from './Pipes/user-list.pipe';
 import { ListBranchComponent } from './list-branch/list-branch.component';
+import { FoodByIdPipe } from './Pipes/food-by-id.pipe';
+import { ListFoodComponent } from './list-food/list-food.component';
+import { ListMenuComponent } from './list-menu/list-menu.component';
+import { ListFoodorderComponent } from './list-foodorder/list-foodorder.component';
+import { EditFoodComponent } from './edit-food/edit-food.component';
+import { EditMenuComponent } from './edit-menu/edit-menu.component';
+import { EditFoodorderComponent } from './edit-foodorder/edit-foodorder.component';
+import { FilterByBranchPipe } from './Pipes/filter-by-branch.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +42,15 @@ import { ListBranchComponent } from './list-branch/list-branch.component';
     EditBranchComponent,
     ListUserComponent,
     UserListPipe,
-    ListBranchComponent
+    ListBranchComponent,
+    FoodByIdPipe,
+    ListFoodComponent,
+    ListMenuComponent,
+    ListFoodorderComponent,
+    EditFoodComponent,
+    EditMenuComponent,
+    EditFoodorderComponent,
+    FilterByBranchPipe
   ],
   imports: [
     BrowserModule,

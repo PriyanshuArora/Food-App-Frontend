@@ -21,10 +21,6 @@ export class AddUserComponent implements OnInit {
   branchlist:any;
 
   ngOnInit(): void {
-    if(!this.user.isLoggedIn()) {
-      window.alert("You are not authorised to access this page, please log in.");
-      this.router.navigate(['loginuser']);
-    }
     if(this.user.getRole() == "Staff") {
       window.alert("You are not authorised to access this page.");
       this.router.navigate(['']);

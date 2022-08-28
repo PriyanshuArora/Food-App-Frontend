@@ -1,6 +1,6 @@
 <div class="container">
-    <h3>Add Food</h3>
-    <form #addData="ngForm" (ngSubmit)="addFood(addData)">
+    <h3>Update Food</h3>
+    <form #addData="ngForm" (ngSubmit)="updateFood(addData)">
       <div class="form-group">
         <label for="name">Name</label>
         <input
@@ -13,6 +13,7 @@
           ngModel
           name="name"
           #name="ngModel"
+          [(ngModel)]="selectedFood.name"
         />
   
         <label for="category">Category</label>
@@ -24,6 +25,7 @@
           ngModel
           name="category"
           #category="ngModel"
+          [(ngModel)]="selectedFood.category"
         >
           <option disabled selected value>Select Food Category</option>
           <option>Burger</option>
@@ -42,6 +44,7 @@
           ngModel
           name="type"
           #type="ngModel"
+          [(ngModel)]="selectedFood.type"
         >
           <option disabled selected value>Select Food Type</option>
           <option>Veg</option>
@@ -59,6 +62,7 @@
           ngModel
           name="price"
           #price="ngModel"
+          [(ngModel)]="selectedFood.price"
         />
 
         <label for="availability">Availability</label>
@@ -70,6 +74,7 @@
           ngModel
           name="availability"
           #availability="ngModel"
+          [(ngModel)]="selectedFood.availability"
         >
           <option disabled selected value>Select Food Availability</option>
           <option value="true">Yes</option>
@@ -87,6 +92,7 @@
           ngModel
           name="description"
           #description="ngModel"
+          [(ngModel)]="selectedFood.description"
         />
 
         <label for="branch" *ngIf="checkAdmin">Branch Id</label>
@@ -99,6 +105,7 @@
           ngModel
           name="branch"
           #branch="ngModel"
+          [(ngModel)]="selectedFood.branch.id"
         >
           <option disabled selected value>Select Branch</option>
           <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
@@ -106,5 +113,5 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-  </div>
+</div>
   

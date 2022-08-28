@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -17,17 +17,7 @@ export class UserService {
     this.id = this.getId();
     this.role = this.getRole();
     this.name = this.getName();
-
-    // if (this.role == undefined ) {
-    //   window.alert('You are not authorized to access this page! please log in.');
-    //   return false;
-    // } else if (this.role != 'admin') {
-    //   window.alert('You are not authorized to access this, you need admin rights.');
-    //   return this.router.navigate(['products']);
-    // } else {
-    //   return true;
-    // }
-
+    
     if (this.id == undefined || this.role == undefined || this.name == undefined) {
       return false;
     } else {
