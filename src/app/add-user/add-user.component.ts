@@ -43,7 +43,13 @@ export class AddUserComponent implements OnInit {
     }
 
     this.user.addUser(form.value).subscribe((res)=>{
-      this.router.navigate(['loginuser']);
+      if(this.user.getRole() == "Branch Manager") {
+        window.alert("Staff added successfully!");
+      }
+      else {
+        window.alert("User added successfully!");
+      }
+      this.router.navigate(['']);
     },(err)=>{
       console.log(err);
       window.alert(err.error.message);

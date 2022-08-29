@@ -43,19 +43,51 @@
 
             <form #food="ngForm" (ngSubmit)="addFood(food)" class="input-group">
                 <select
-                class="form-control btn-outline-secondary"
+                class="form-control"
                 id="id"
                 required
         
                 ngModel
                 name="id"
                 #id="ngModel"
+
+                *ngIf="checkBranchManager"
                 >
                 <option value selected disabled hidden>Select Food</option>
                 <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
                 </select>
+
+                <select
+                class="form-control"
+                id="id"
+                required
+        
+                ngModel
+                name="id"
+                #id="ngModel"
+
+                *ngIf="checkAdmin"
+                >
+                <option value selected disabled hidden>Select Food</option>
+                <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                </select>                
                 <button type="submit" class="btn btn-outline-secondary">Add</button>
             </form>
+
+            <label for="branch" *ngIf="checkAdmin">Branch Id</label>
+            <select
+            class="form-control"
+            *ngIf="checkAdmin"
+            id="branch"
+            required
+
+            ngModel
+            name="branch"
+            #branch="ngModel"
+            >
+            <option disabled selected value>Select Branch</option>
+            <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

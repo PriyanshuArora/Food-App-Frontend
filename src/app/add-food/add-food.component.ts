@@ -38,7 +38,7 @@ export class AddFoodComponent implements OnInit {
   addFood(form: NgForm) {
     if(this.user.getRole() == "Branch Manager") {
       this.branch.id = this.user.getBranch();
-    form.value.branch = this.branch;
+      form.value.branch = this.branch;
     } else {
       this.branch.id = form.value.branch;
       form.value.branch = this.branch;

@@ -1,0 +1,47 @@
+<div class="container">
+  <h3 class="text-center">Menu</h3>
+  <div class="row justify-content-center" *ngIf="!checkAdmin">
+    <div
+      class="card borcard-borderedder border-info col-5"
+      *ngFor="let b of result.t | filterByBranch"
+    >
+      <div class="card-header border-info bg-info">
+        <div class="card-title text-center menu-heading">{{ b.name }}</div>
+      </div>
+      <div class="card-body row" *ngFor="let f of b.foods">
+        <div class="col-8 text-center">
+          {{ f.name }}
+        </div>
+        <div class="col-4 text-center" *ngIf="f.type == 'Veg'">
+          <img src="../assets/veg.jpg" />
+        </div>
+        <div class="col-4 text-center" *ngIf="f.type == 'Non-Veg'">
+          <img src="../assets/nveg.jpg" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center" *ngIf="checkAdmin">
+    <div
+      class="card borcard-borderedder border-info col-5"
+      *ngFor="let b of result.t"
+    >
+      <div class="card-header border-info bg-info">
+        <div class="card-title text-center menu-heading">
+          {{ b.name }} | Branch id:{{ b.branch.id }}
+        </div>
+      </div>
+      <div class="card-body row" *ngFor="let f of b.foods">
+        <div class="col-8 text-center">
+          {{ f.name }}
+        </div>
+        <div class="col-4 text-center" *ngIf="f.type == 'Veg'">
+          <img src="../assets/veg.jpg" />
+        </div>
+        <div class="col-4 text-center" *ngIf="f.type == 'Non-Veg'">
+          <img src="../assets/nveg.jpg" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

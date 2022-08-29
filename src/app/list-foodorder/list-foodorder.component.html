@@ -1,1 +1,53 @@
-<p>list-foodorder works!</p>
+<div class="container">
+    <h3>Food Order Details</h3>
+    <table class="table">
+      <thead>
+        <tr class="table-active">
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Date</th>
+          <th scope="col" *ngIf="checkAdmin">Branch</th>
+          <th scope="col">Foods</th>
+          <th scope="col">Price</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!checkAdmin">
+        <tr *ngFor="let b of result.t | filterByBranch">
+          <th>{{ b.id }}</th>
+          <td>{{ b.name }}</td>
+          <td>{{ b.phone }}</td>
+          <td>{{ b.date }}</td>
+          <td>
+            <table>
+              <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
+            </table>
+          </td>
+          <td>{{ b.price }}</td>
+          <td><button class="btn btn-primary" type="button" [routerLink]="['/editorder/',b.id]">Edit</button></td>
+          <td><button class="btn btn-secondary" type="button" (click)="deleteFoodOrder(b.id)">Delete</button></td>
+        </tr>
+      </tbody>
+
+      <tbody *ngIf="checkAdmin">
+        <tr *ngFor="let b of result.t">
+          <th>{{ b.id }}</th>
+          <td>{{ b.name }}</td>
+          <td>{{ b.phone }}</td>
+          <td>{{ b.date }}</td>
+          <td>{{ b.branch.id }}</td>
+          <td>
+            <table>
+              <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
+            </table>
+          </td>
+          <td>{{ b.price }}</td>
+          <td><button class="btn btn-primary" type="button" [routerLink]="['/editorder/',b.id]">Edit</button></td>
+          <td><button class="btn btn-secondary" type="button" (click)="deleteFoodOrder(b.id)">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+  

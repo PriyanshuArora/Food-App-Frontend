@@ -8,12 +8,10 @@ import { AppComponent } from './app.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
-import { ManagerListComponent } from './manager-list/manager-list.component';
 import { AddBranchComponent } from './add-branch/add-branch.component';
 import { AddFoodComponent } from './add-food/add-food.component';
 import { AddMenuComponent } from './add-menu/add-menu.component';
 import { AddFoodorderComponent } from './add-foodorder/add-foodorder.component';
-import { BranchManagerListComponent } from './branch-manager-list/branch-manager-list.component';
 import { EditBranchComponent } from './edit-branch/edit-branch.component';
 import { ListUserComponent } from './list-user/list-user.component';
 import { UserListPipe } from './Pipes/user-list.pipe';
@@ -26,6 +24,8 @@ import { EditFoodComponent } from './edit-food/edit-food.component';
 import { EditMenuComponent } from './edit-menu/edit-menu.component';
 import { EditFoodorderComponent } from './edit-foodorder/edit-foodorder.component';
 import { FilterByBranchPipe } from './Pipes/filter-by-branch.pipe';
+import { ListMenuShowcaseComponent } from './list-menu-showcase/list-menu-showcase.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -33,12 +33,10 @@ import { FilterByBranchPipe } from './Pipes/filter-by-branch.pipe';
     AddUserComponent,
     EditUserComponent,
     LoginUserComponent,
-    ManagerListComponent,
     AddBranchComponent,
     AddFoodComponent,
     AddMenuComponent,
     AddFoodorderComponent,
-    BranchManagerListComponent,
     EditBranchComponent,
     ListUserComponent,
     UserListPipe,
@@ -50,7 +48,9 @@ import { FilterByBranchPipe } from './Pipes/filter-by-branch.pipe';
     EditFoodComponent,
     EditMenuComponent,
     EditFoodorderComponent,
-    FilterByBranchPipe
+    FilterByBranchPipe,
+    ListMenuShowcaseComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,14 @@
+.col-5 {
+    padding:0px;
+    margin:10px;
+}
+img {
+    height: 20px;
+    width: 20px;
+}
+.menu-heading {
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}

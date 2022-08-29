@@ -1,5 +1,5 @@
-<!-- <div class="container">
-    <h3>Add Menu</h3>
+<div class="container">
+    <h3>Update Menu</h3>
     <form #addData="ngForm" (ngSubmit)="updateMenu(addData)">
         <div class="form-group">
             <label for="name">Name</label>
@@ -13,6 +13,7 @@
             ngModel
             name="name"
             #name="ngModel"
+            [(ngModel)]="selectedMenu.name"
             />
     
             <label for="category">Category</label>
@@ -24,6 +25,7 @@
             ngModel
             name="category"
             #category="ngModel"
+            [(ngModel)]="selectedMenu.category"
             >
             <option disabled selected value>Select Food Category</option>
             <option>Burger</option>
@@ -34,7 +36,7 @@
             </select>
     
             <label for="listfood">Foods</label>
-            <div *ngFor="let u of foods">                    
+            <div *ngFor="let u of selectedMenu.foods">                    
                 <div class="input-group">
                     <p class="form-control btn-outline-secondary" *ngFor="let f of foodlist.t | foodById:u.id">{{ f.category }} | {{ f.name }} ({{ f.type }})</p>
                     <a class="btn btn-outline-secondary" (click)="deleteFood(u)">Delete</a><br>
@@ -50,14 +52,47 @@
                 ngModel
                 name="id"
                 #id="ngModel"
+
+                *ngIf="checkBranchManager"
                 >
                 <option value selected disabled hidden>Select Food</option>
                 <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
                 </select>
+
+                <select
+                class="form-control btn-outline-secondary"
+                id="id"
+                required
+        
+                ngModel
+                name="id"
+                #id="ngModel"
+
+                *ngIf="checkAdmin"
+                >
+                <option value selected disabled hidden>Select Food</option>
+                <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                </select>                
                 <button type="submit" class="btn btn-outline-secondary">Add</button>
             </form>
+
+            <label for="branch" *ngIf="checkAdmin">Branch Id</label>
+            <select
+            class="form-control"
+            *ngIf="checkAdmin"
+            id="branch"
+            required
+
+            ngModel
+            name="branch"
+            #branch="ngModel"
+            [(ngModel)]="selectedMenu.branch.id"
+            >
+            <option disabled selected value>Select Branch</option>
+            <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+            </select>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-   -->
+  

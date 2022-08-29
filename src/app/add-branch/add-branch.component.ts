@@ -23,7 +23,7 @@ export class AddBranchComponent implements OnInit {
   addBranch(form:NgForm) {
     console.log(form.value);
     this.branch.addBranch(form.value).subscribe((res)=>{
-      console.log(res);
+      window.alert("Branch added successfully!");
       this.router.navigate(['']);
     },(err)=>{
       console.log(err);

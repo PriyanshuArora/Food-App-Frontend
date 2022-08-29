@@ -12,12 +12,11 @@
           <th scope="col">Delete</th>
         </tr>
       </thead>
-      <tbody *ngIf="checkAdmin">
-        <tr *ngFor="let b of result.t">
+      <tbody *ngIf="!checkAdmin">
+        <tr *ngFor="let b of result.t | filterByBranch">
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.category }}</td>
-          <td>{{ b.branch.id }}</td>
           <td>
             <table>
               <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
@@ -27,11 +26,13 @@
           <td><button class="btn btn-secondary" type="button" (click)="deleteMenu(b.id)">Delete</button></td>
         </tr>
       </tbody>
-      <tbody *ngIf="checkBranchManager">
-        <tr *ngFor="let b of result.t | filterByBranch">
+
+      <tbody *ngIf="checkAdmin">
+        <tr *ngFor="let b of result.t">
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.category }}</td>
+          <td>{{ b.branch.id }}</td>
           <td>
             <table>
               <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>

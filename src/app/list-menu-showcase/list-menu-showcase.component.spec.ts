@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManagerListComponent } from './manager-list.component';
+import { ListMenuShowcaseComponent } from './list-menu-showcase.component';
 
-describe('ManagerListComponent', () => {
-  let component: ManagerListComponent;
-  let fixture: ComponentFixture<ManagerListComponent>;
+describe('ListMenuShowcaseComponent', () => {
+  let component: ListMenuShowcaseComponent;
+  let fixture: ComponentFixture<ListMenuShowcaseComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ManagerListComponent ]
+      declarations: [ ListMenuShowcaseComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManagerListComponent);
+    fixture = TestBed.createComponent(ListMenuShowcaseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

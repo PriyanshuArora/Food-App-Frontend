@@ -1,1 +1,127 @@
-<p>edit-foodorder works!</p>
+<div class="container">
+    <h3>Update Food Order</h3>
+    <form #addData="ngForm" (ngSubmit)="updateFoodOrder(addData)">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Enter The Food Name"
+                id="name"
+                required
+        
+                ngModel
+                name="name"
+                #name="ngModel"
+                [(ngModel)]="selectedOrder.name"
+            />
+
+            <label for="phone">Phone Number</label>
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Enter The Customer Phone Number"
+                id="phone"
+                required
+        
+                ngModel
+                name="phone"
+                #phone="ngModel"
+                [(ngModel)]="selectedOrder.phone"
+            />
+    
+            <label for="status">Status</label>
+            <select
+                class="form-control"
+                id="status"
+                required
+        
+                ngModel
+                name="status"
+                #status="ngModel"
+                [(ngModel)]="selectedOrder.status"
+            >
+                <option disabled selected value>Select Order Status</option>
+                <option>Ordered</option>
+                <option>Processing</option>
+                <option>Delivered</option>
+            </select>
+    
+            <label for="listfood">Foods</label>
+            <div *ngFor="let u of tempList">                    
+                <div class="input-group">
+                    <p class="form-control btn-outline-secondary disabled" *ngFor="let f of foodlist.t | foodById:u.id">{{ f.category }} | {{ f.name }} ({{ f.type }})</p>
+                    <div class="input-group-append">
+                        <a class="btn btn-outline-secondary disabled">{{u.quantity}}</a>
+                        <a class="btn btn-outline-secondary" (click)="deleteFood(u)">Delete</a>
+                    </div>
+                </div><br>
+            </div>
+
+            <form #food="ngForm" (ngSubmit)="addFood(food)" class="input-group">
+                <select
+                class="form-control btn-outline-secondary"
+                id="id"
+                required
+        
+                ngModel
+                name="id"
+                #id="ngModel"
+
+                *ngIf="checkBranchManager"
+                >
+                    <option value selected disabled hidden>Select Food</option>
+                    <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                </select>
+
+                <select
+                class="form-control btn-outline-secondary"
+                id="id"
+                required
+        
+                ngModel
+                name="id"
+                #id="ngModel"
+
+                *ngIf="checkAdmin"
+                >
+                    <option value selected disabled hidden>Select Food</option>
+                    <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                </select>  
+
+                <div class="input-group-append">
+                    <input
+                        type="number"
+                        class="btn btn-outline-secondary"
+                        placeholder="Quantity"
+                        id="quantity"
+                        required
+
+                        ngModel
+                        name="quantity"
+                        #quantity="ngModel"
+                    />              
+                    <button type="submit" class="btn btn-outline-secondary">Add</button>
+                </div>
+            </form>
+
+            <label for="branch" *ngIf="checkAdmin">Branch Id</label>
+            <select
+            class="form-control"
+            *ngIf="checkAdmin"
+            id="branch"
+            required
+
+            ngModel
+            name="branch"
+            #branch="ngModel"
+            [(ngModel)]="selectedOrder.branch.id"
+            >
+            <option disabled selected value>Select Branch</option>
+            <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+  

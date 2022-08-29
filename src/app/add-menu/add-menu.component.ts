@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BranchService } from '../Services/branch.service';
 import { FoodService } from '../Services/food.service';
 import { MenuService } from '../Services/menu.service';
 import { UserService } from '../Services/user.service';
@@ -16,7 +17,8 @@ export class AddMenuComponent implements OnInit {
     private user: UserService,
     private router: Router,
     private menu: MenuService,
-    private foodService: FoodService
+    private foodService: FoodService,
+    private branchService: BranchService
   ) {}
 
   // Local Variables
@@ -24,15 +26,20 @@ export class AddMenuComponent implements OnInit {
   foods:any = [];
   foodItem:any = { id: '' };
   checkBranchManager = this.user.isBranchManager();
+  checkAdmin = this.user.isAdmin();
   foodlist: any;
+  branchlist:any;
 
   ngOnInit(): void {
-    if (this.user.getRole() != 'Branch Manager') {
+    if (this.user.getRole() == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
     this.foodService.getFoodList().subscribe((data)=>{
       this.foodlist = data;
+    })
+    this.branchService.getBranchList().subscribe((data)=>{
+      this.branchlist = data;
     })
   }
 
@@ -40,7 +47,7 @@ export class AddMenuComponent implements OnInit {
     if(form.value.id == '') {
       window.alert("Select any food first!");
     }
-    else if(this.foods.includes(form.value)) {
+    else if(this.foods.some((item: { id: any; }) => item.id == form.value.id)) {
       window.alert("Food already added! Select any other food.");
     }
     else {
@@ -57,8 +64,13 @@ export class AddMenuComponent implements OnInit {
   // Methods
   addMenu(form: NgForm) {
     form.value.foods=this.foods;
-    this.branch.id = this.user.getBranch();
-    form.value.branch = this.branch;
+    if(this.user.getRole() == "Branch Manager") {
+      this.branch.id = this.user.getBranch();
+      form.value.branch = this.branch;
+    } else {
+      this.branch.id = form.value.branch;
+      form.value.branch = this.branch;
+    }
 
     this.menu.addMenu(form.value).subscribe(
       (res) => {
