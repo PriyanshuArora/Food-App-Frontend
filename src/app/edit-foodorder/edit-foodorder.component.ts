@@ -36,10 +36,6 @@ export class EditFoodorderComponent implements OnInit {
   branchlist:any;
 
   ngOnInit(): void {
-    if (this.user.getRole() == 'Staff') {
-      window.alert('You are not authorised to access this page.');
-      this.router.navigate(['']);
-    }
     this.foodService.getFoodList().subscribe((data)=>{
       this.foodlist = data;
     })
@@ -69,6 +65,8 @@ export class EditFoodorderComponent implements OnInit {
                   this.temp = { id: '', quantity: 0 };
                   this.temp.id = o.id;
                   this.tempList.push(this.temp);
+                  console.log(this.temp);
+                  console.log(this.tempList);
                 }
               }
             }
@@ -78,8 +76,8 @@ export class EditFoodorderComponent implements OnInit {
           }
         }
       }
-      console.log(this.tempList);
-      console.log(this.foods);
+      // console.log(this.tempList);
+      // console.log(this.foods);
     },(err)=>{
       console.log(err);
       window.alert(err.error.message);
@@ -117,7 +115,7 @@ export class EditFoodorderComponent implements OnInit {
 
   updateFoodOrder(form: NgForm) {
     form.value.foods=this.foods;
-    if(this.user.getRole() == "Branch Manager") {
+    if(this.user.getRole() != "Admin") {
       this.branch.id = this.user.getBranch();
       form.value.branch = this.branch;
     } else {

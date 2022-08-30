@@ -41,6 +41,7 @@ export class AddFoodorderComponent implements OnInit {
     this.branchService.getBranchList().subscribe((data)=>{
       this.branchlist = data;
     })
+    console.log(this.foodlist);
   }
 
   addFood(form: NgForm) {

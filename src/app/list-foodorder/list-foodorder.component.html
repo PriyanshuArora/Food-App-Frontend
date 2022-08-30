@@ -19,7 +19,7 @@
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.phone }}</td>
-          <td>{{ b.date }}</td>
+          <td>{{ b.date | date:'medium' }}</td>
           <td>
             <table>
               <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
@@ -36,7 +36,7 @@
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.phone }}</td>
-          <td>{{ b.date }}</td>
+          <td>{{ b.date | date:'medium' }}</td>
           <td>{{ b.branch.id }}</td>
           <td>
             <table>

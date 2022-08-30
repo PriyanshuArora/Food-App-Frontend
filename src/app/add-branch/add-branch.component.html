@@ -1,53 +1,79 @@
 <div class="container">
     <h3>Add Branch</h3>
-    <form #addData="ngForm" (ngSubmit)="addBranch(addData)">
+    <form #addData="ngForm" (ngSubmit)="addData.form.valid && addBranch(addData)">
       <div class="form-group">
         <label for="name">Name</label>
+        <div *ngIf="(addData.submitted || name.invalid && name.touched) && name.errors" style="color: red;">
+          <div *ngIf="name.errors['required']"><sup>*</sup>Name is required</div>
+        </div>
         <input
           type="text"
           class="form-control"
           placeholder="Enter The Branch Name"
           id="name"
+          required
           
           ngModel
           name="name"
           #name="ngModel"
+          [ngClass]="{'border-danger': (addData.submitted && name.errors?.['required'])}"
         />
   
         <label for="city">City</label>
+        <div *ngIf="(addData.submitted || city.invalid && city.touched) && city.errors" style="color: red;">
+          <div *ngIf="city.errors['required']"><sup>*</sup>City is required</div>
+        </div>
         <input
           type="text"
           class="form-control"
           placeholder="Enter The Branch City"
           id="city"
+          required
           
           ngModel
           name="city"
           #city="ngModel"
+          [ngClass]="{'border-danger': (addData.submitted && city.errors?.['required'])}"
         />
   
         <label for="phone">Phone</label>
+        <div *ngIf="(addData.submitted || phone.invalid && phone.touched) && phone.errors" style="color: red;">
+          <div *ngIf="phone.errors['required']"><sup>*</sup>Phone Number is required</div>
+          <div *ngIf="phone.errors['minlength']"><sup>*</sup>Phone Number must be at least 10 characters</div>
+          <div *ngIf="phone.errors['maxlength']"><sup>*</sup>Phone Number must be at most 10 characters</div>
+        </div>
         <input
-          type="number"
+          type="text"
           class="form-control"
           placeholder="Enter The Branch Phone Number"
           id="phone"
           
+          required
+          minlength="10"
+          maxlength="10"
+          
           ngModel
           name="phone"
           #phone="ngModel"
+          [ngClass]="{'border-danger': (addData.submitted && phone.errors?.['required'])}"
         />
           
         <label for="email">Email</label>
+        <div *ngIf="(addData.submitted || email.invalid && email.touched) && email.errors" style="color: red;">
+          <div *ngIf="email.errors['required']"><sup>*</sup>Email is required</div>
+          <div *ngIf="email.errors['email']"><sup>*</sup>Email is invalid</div>
+        </div>
         <input
           type="email"
           class="form-control"
           placeholder="Enter The Branch Email"
           id="email"
+          required email
           
           ngModel
           name="email"
           #email="ngModel"
+          [ngClass]="{'border-danger': (addData.submitted && email.errors?.['required'])}"
         />
 
       </div>

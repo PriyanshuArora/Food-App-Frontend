@@ -1,0 +1,50 @@
+.col-5 {
+    padding:0px;
+    margin:10px;
+}
+img {
+    height: 20px;
+    width: 20px;
+}
+.menu-heading {
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+.menuMarquee {
+    display:inline-flex;
+}
+.marquee {
+    width: 100%;
+}
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+.bg-home {
+    width: 100%; 
+    max-height: 85vh;
+    height: auto;
+    position: absolute;
+    /* z-index:-5; */
+    object-fit: contain;
+}
+
+.fade {
+    animation: fadeInAnimation ease 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+     }
+}

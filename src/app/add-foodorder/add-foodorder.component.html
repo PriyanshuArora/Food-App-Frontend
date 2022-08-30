@@ -1,8 +1,11 @@
 <div class="container">
     <h3>Add Food Order</h3>
-    <form #addData="ngForm" (ngSubmit)="addFoodOrder(addData)">
+    <form #addData="ngForm" (ngSubmit)="addData.form.valid && addFoodOrder(addData)">
         <div class="form-group">
             <label for="name">Name</label>
+            <div *ngIf="(addData.submitted || name.invalid && name.touched) && name.errors" style="color: red;">
+                <div *ngIf="name.errors['required']"><sup>*</sup>Name is required</div>
+            </div>
             <input
                 type="text"
                 class="form-control"
@@ -13,19 +16,29 @@
                 ngModel
                 name="name"
                 #name="ngModel"
+                [ngClass]="{'border-danger': (addData.submitted && name.errors?.['required'])}"
             />
 
             <label for="phone">Phone Number</label>
+            <div *ngIf="(addData.submitted || phone.invalid && phone.touched) && phone.errors" style="color: red;">
+                <div *ngIf="phone.errors['required']"><sup>*</sup>Phone Number is required</div>
+                <div *ngIf="phone.errors['minlength']"><sup>*</sup>Phone Number must be at least 10 characters</div>
+                <div *ngIf="phone.errors['maxlength']"><sup>*</sup>Phone Number must be at most 10 characters</div>
+            </div>
             <input
                 type="text"
                 class="form-control"
                 placeholder="Enter The Customer Phone Number"
                 id="phone"
+                
                 required
+                minlength="10"
+                maxlength="10"
         
                 ngModel
                 name="phone"
                 #phone="ngModel"
+                [ngClass]="{'border-danger': (addData.submitted && phone.errors?.['required'])}"
             />
     
             <label for="listfood">Foods</label>
@@ -40,66 +53,95 @@
             </div>
 
             <form #food="ngForm" (ngSubmit)="addFood(food)" class="input-group">
-                <select
-                class="form-control"
-                id="id"
-                required
-        
-                ngModel
-                name="id"
-                #id="ngModel"
-
-                *ngIf="checkBranchManager"
-                >
-                    <option value selected disabled hidden>Select Food</option>
-                    <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
-                </select>
-
-                <select
-                class="form-control"
-                id="id"
-                required
-        
-                ngModel
-                name="id"
-                #id="ngModel"
-
-                *ngIf="checkAdmin"
-                >
-                    <option value selected disabled hidden>Select Food</option>
-                    <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
-                </select>  
-
-                <div class="input-group-append">
-                    <input
-                        type="number"
-                        class="btn btn-outline-secondary"
-                        placeholder="Quantity"
-                        id="quantity"
-                        required
-
-                        ngModel
-                        name="quantity"
-                        #quantity="ngModel"
-                    />              
-                    <button type="submit" class="btn btn-outline-secondary">Add</button>
+                <div *ngIf="!checkAdmin" class="input-group">
+                    <div *ngIf="(addData.submitted || id.invalid && id.touched) && id.errors" style="color: red;" class="input-group">
+                        <div *ngIf="id.errors['required']"><sup>*</sup>Foods is required</div>
+                    </div>
+                    <select
+                    class="form-control"
+                    id="id"
+                    required
+            
+                    ngModel
+                    name="id"
+                    #id="ngModel"
+                    [ngClass]="{'border-danger': (addData.submitted && id.errors?.['required'])}"
+                    >
+                        <option value selected disabled hidden>Select Food</option>
+                        <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                    </select>
+                    <div class="input-group-append">
+                        <input
+                            type="number"
+                            class="btn btn-outline-secondary"
+                            placeholder="Quantity"
+                            id="quantity"
+                            required
+    
+                            ngModel
+                            name="quantity"
+                            #quantity="ngModel"
+                            [ngClass]="{'border-danger': (addData.submitted && quantity.errors?.['required'])}"
+                        />              
+                        <button type="submit" class="btn btn-outline-secondary">Add</button>
+                    </div>
                 </div>
+
+                <div *ngIf="checkAdmin" class="input-group">
+                    <div *ngIf="(addData.submitted || id.invalid && id.touched) && id.errors" style="color: red;" class="input-group">
+                        <div *ngIf="id.errors['required']"><sup>*</sup>Foods is required</div>
+                    </div>
+                    <select
+                    class="form-control"
+                    id="id"
+                    required
+            
+                    ngModel
+                    name="id"
+                    #id="ngModel"
+                    [ngClass]="{'border-danger': (addData.submitted && id.errors?.['required'])}"
+                    >
+                        <option value selected disabled hidden>Select Food</option>
+                        <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                    </select>  
+                    <div class="input-group-append">
+                        <input
+                            type="number"
+                            class="btn btn-outline-secondary"
+                            placeholder="Quantity"
+                            id="quantity"
+                            required
+    
+                            ngModel
+                            name="quantity"
+                            #quantity="ngModel"
+                            [ngClass]="{'border-danger': (addData.submitted && quantity.errors?.['required'])}"
+                        />              
+                        <button type="submit" class="btn btn-outline-secondary">Add</button>
+                    </div>
+                </div>
+
             </form>
 
-            <label for="branch" *ngIf="checkAdmin">Branch Id</label>
-            <select
-            class="form-control"
-            *ngIf="checkAdmin"
-            id="branch"
-            required
+            <div *ngIf="checkAdmin">
+                <label for="branch">Branch Id</label>
+                <div *ngIf="(addData.submitted || branch.invalid && branch.touched) && branch.errors" style="color: red;" class="input-group">
+                    <div *ngIf="branch.errors['required']"><sup>*</sup>Branch is required</div>
+                </div>
+                <select
+                class="form-control"
+                id="branch"
+                required
 
-            ngModel
-            name="branch"
-            #branch="ngModel"
-            >
-                <option disabled selected value>Select Branch</option>
-                <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
-            </select>
+                ngModel
+                name="branch"
+                #branch="ngModel"
+                [ngClass]="{'border-danger': (addData.submitted && branch.errors?.['required'])}"
+                >
+                    <option disabled selected value>Select Branch</option>
+                    <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+                </select>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

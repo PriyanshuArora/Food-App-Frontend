@@ -60,7 +60,7 @@ export class UserService {
     localStorage.removeItem('userrole');
     localStorage.removeItem('username');
     localStorage.removeItem('userbranch');
-    return this.router.navigate(['loginuser']);
+    return this.router.navigate(['']);
   }
 
   // Getting id from local storage.

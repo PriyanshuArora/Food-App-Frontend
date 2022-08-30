@@ -1,83 +1,112 @@
 <div class="container">
     <h3 *ngIf="checkAdmin">Update User</h3>
     <h3 *ngIf="checkBranchManager">Update Staff</h3>
-    <form #addData="ngForm" (ngSubmit)="updateUser(addData)">
+    <form #addData="ngForm" (ngSubmit)="addData.form.valid && updateUser(addData)">
       <div class="form-group">
         <label for="name">Name</label>
+        <div *ngIf="(addData.submitted || name.invalid && name.touched) && name.errors" style="color: red;">
+          <div *ngIf="name.errors['required']"><sup>*</sup>Name is required</div>
+          <div *ngIf="name.errors['pattern']"><sup>*</sup>Name is invalid</div>
+        </div>
         <input
           type="text"
           class="form-control"
           placeholder="Enter The User Name"
           id="name"
+          
           required
+          pattern="^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$"
   
           ngModel
           name="name"
           #name="ngModel"
           [(ngModel)]="selectedUser.name"
+          [ngClass]="{'border-danger': (addData.submitted && name.errors?.['required'])}"
         />
   
         <label for="email">Email</label>
+        <div *ngIf="(addData.submitted || email.invalid && email.touched) && email.errors" style="color: red;">
+          <div *ngIf="email.errors['required']"><sup>*</sup>Email is required</div>
+          <div *ngIf="email.errors['email']"><sup>*</sup>Email is invalid</div>
+        </div>
         <input
           type="email"
           class="form-control"
           placeholder="Enter The User Email"
           id="email"
-          required
+          required email
   
           ngModel
           name="email"
           #email="ngModel"
           [(ngModel)]="selectedUser.email"
+          [ngClass]="{'border-danger': (addData.submitted && email.errors?.['required'])}"
         />
   
         <label for="password">Password</label>
+        <div *ngIf="(addData.submitted || password.invalid && password.touched) && password.errors" style="color: red;">
+          <div *ngIf="password.errors['required']"><sup>*</sup>Password is required</div>
+          <div *ngIf="password.errors['minlength']"><sup>*</sup>Password must be at least 5 characters</div>
+          <div *ngIf="password.errors['maxlength']"><sup>*</sup>Password must be at most 10 characters</div>
+        </div>
         <input
           type="password"
           class="form-control"
           placeholder="Enter The User Password"
           id="password"
+          
           required
+          minlength="5"
+          maxlength="10"
   
           ngModel
           name="password"
           #password="ngModel"
+          [ngClass]="{'border-danger': (addData.submitted && password.errors?.['required'])}"
         />
 
-        <div *ngIf="selectedUser.branch != null">   
-          <label for="role" *ngIf="checkAdmin">Role &nbsp;</label>
-          <select
-            class="form-control"
-            *ngIf="checkAdmin"
-            id="role"
-            required
-    
-            ngModel
-            name="role"
-            #role="ngModel"
-            [(ngModel)]="selectedUser.role"
-          >
-            <option disabled selected value>Select Role</option>
-            <option>Admin</option>
-            <option>Branch Manager</option>
-            <option>Staff</option>
-          </select>
-        
-          <label for="branch" *ngIf="checkAdmin">Branch Id</label>
-          <select
-            class="form-control"
-            *ngIf="checkAdmin"
-            id="branch"
-            required
-    
-            ngModel
-            name="branch"
-            #branch="ngModel"
-            [(ngModel)]="selectedUser.branch.id"
-          >
-            <option disabled selected value>Select Branch</option>
-            <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
-          </select>
+        <div *ngIf="selectedUser.branch != null"> 
+          <div *ngIf="checkAdmin">  
+            <label for="role">Role</label>
+            <div *ngIf="(addData.submitted || role.invalid && role.touched) && role.errors" style="color: red;">
+              <div *ngIf="role.errors['required']"><sup>*</sup>Role is required</div>
+            </div>
+            <select
+              class="form-control"
+              id="role"
+              required
+      
+              ngModel
+              name="role"
+              #role="ngModel"
+              [(ngModel)]="selectedUser.role"
+              [ngClass]="{'border-danger': (addData.submitted && role.errors?.['required'])}"
+            >
+              <option disabled selected value>Select Role</option>
+              <option>Admin</option>
+              <option>Branch Manager</option>
+              <option>Staff</option>
+            </select>
+          
+            <label for="branch">Branch Id</label>
+            <div *ngIf="(addData.submitted || branch.invalid && branch.touched) && branch.errors" style="color: red;">
+              <div *ngIf="branch.errors['required']"><sup>*</sup>Branch is required</div>
+            </div>
+            <select
+              class="form-control"
+              id="branch"
+              required
+      
+              ngModel
+              name="branch"
+              #branch="ngModel"
+              [(ngModel)]="selectedUser.branch.id"
+              [ngClass]="{'border-danger': (addData.submitted && branch.errors?.['required'])}"
+            >
+              <option disabled selected value>Select Branch</option>
+              <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+            </select>
+          </div>
         </div>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>

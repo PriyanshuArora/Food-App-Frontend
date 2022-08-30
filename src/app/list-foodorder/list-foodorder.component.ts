@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FoodorderService } from '../Services/foodorder.service';
-import { MenuService } from '../Services/menu.service';
 import { UserService } from '../Services/user.service';
 
 @Component({
@@ -21,10 +20,6 @@ export class ListFoodorderComponent implements OnInit {
       this.result = data;
       console.log(this.result.t);
     })
-    if(this.user.getRole() == "Staff") {
-      window.alert("You are not authorised to access this page.");
-      this.router.navigate(['']);
-    }
   }
 
   deleteFoodOrder(id:any) {

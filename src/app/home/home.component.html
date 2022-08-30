@@ -1,3 +1,125 @@
 <div class="container">
-    <h1 class="text-center">Hi {{username}}, Welcome to the Food-App</h1>
+  <h1 class="text-center fade">Hi {{ username }}, Welcome to the Food-App</h1>
 </div>
+<img class="bg-home fade" src="../assets/bghome.jpg"/>
+<h3 class="text-center fade" *ngIf="!isLoggedIn()">Login! to get started</h3>
+<h3 class="text-center fade" *ngIf="isLoggedIn()">Today's Menu</h3>
+<marquee behavior="scroll" direction="left" scrollamount="7" *ngIf="isLoggedIn()" class="fade">
+  <div class="container justify-content-center menuMarquee" *ngIf="!checkAdmin">
+    <div class="card borcard-borderedder border-danger col-5" *ngFor="let b of menuList.t | filterByBranch">
+      <div class="card-header border-danger bg-dark">
+        <div class="card-title text-center menu-heading">{{ b.name }}</div>
+      </div>
+      <div class="card-body row" *ngFor="let f of b.foods">
+        <div class="col-8 text-center">
+          {{ f.name }}
+        </div>
+        <div class="col-4 text-center" *ngIf="f.type == 'Veg'">
+          <img src="../assets/veg.jpg" />
+        </div>
+        <div class="col-4 text-center" *ngIf="f.type == 'Non-Veg'">
+          <img src="../assets/nveg.jpg" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container justify-content-center menuMarquee" *ngIf="checkAdmin">
+    <div class="card borcard-borderedder border-danger col-5" *ngFor="let b of menuList.t">
+      <div class="card-header border-danger bg-dark">
+        <div class="card-title text-center menu-heading">
+          {{ b.name }} | Branch id:{{ b.branch.id }}
+        </div>
+      </div>
+      <div class="card-body row" *ngFor="let f of b.foods">
+        <div class="col-8 text-center">
+          {{ f.name }}
+        </div>
+        <div class="col-4 text-center" *ngIf="f.type == 'Veg'">
+          <img src="../assets/veg.jpg" />
+        </div>
+        <div class="col-4 text-center" *ngIf="f.type == 'Non-Veg'">
+          <img src="../assets/nveg.jpg" />
+        </div>
+      </div>
+    </div>
+  </div>
+</marquee>
+
+<footer class="bg-light text-center text-lg-start fade" *ngIf="isLoggedIn()">
+  <Section class="bg-light text-center text-lg-start">
+
+    <div class="text-center p-4 " *ngIf="checkAdmin">
+      <div class="row justify-content-center">
+        <div class="col-2">
+          <h4>Total Users</h4>
+        </div>
+        <div class="col-2">
+          <h4>Total Branches</h4>
+        </div>
+        <div class="col-2">
+          <h4>Total Foods</h4>
+        </div>
+        <div class="col-2">
+          <h4>Total Menus</h4>
+        </div>
+        <div class="col-2">
+          <h4>Total Food Orders</h4>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-2">
+          <h1>{{userList.t.length}}</h1>
+        </div>
+        <div class="col-2">
+          <h1>{{branchList.t.length}}</h1>
+        </div>
+        <div class="col-2">
+          <h1>{{foodList.t.length}}</h1>
+        </div>
+        <div class="col-2">
+          <h1>{{menuList.t.length}}</h1>
+        </div>
+        <div class="col-2">
+          <h1>{{orderList.t.length}}</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center p-4" *ngIf="!checkAdmin">
+      <div class="row">
+        <div class="col-3">
+          <h4>Total Staffs</h4>
+        </div>
+        <div class="col-3">
+          <h4>Total Foods</h4>
+        </div>
+        <div class="col-3">
+          <h4>Total Menus</h4>
+        </div>
+        <div class="col-3">
+          <h4>Total Food Orders</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <h1>{{userCount}}</h1>
+        </div>
+        <div class="col-3">
+          <h1>{{foodCount}}</h1>
+        </div>
+        <div class="col-3">
+          <h1>{{menuCount}}</h1>
+        </div>
+        <div class="col-3">
+          <h1>{{orderCount}}</h1>
+        </div>
+      </div>
+    </div>
+
+  </Section>
+
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);" *ngIf="!checkAdmin">
+    {{currentBranch.id}}, {{currentBranch.name}}, {{currentBranch.city}}, {{currentBranch.phone}}
+  </div>
+</footer>

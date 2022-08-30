@@ -1,8 +1,11 @@
 <div class="container">
     <h3>Update Food</h3>
-    <form #addData="ngForm" (ngSubmit)="updateFood(addData)">
+    <form #addData="ngForm" (ngSubmit)="addData.form.valid && updateFood(addData)">
       <div class="form-group">
         <label for="name">Name</label>
+        <div *ngIf="(addData.submitted || name.invalid && name.touched) && name.errors" style="color: red;">
+          <div *ngIf="name.errors['required']"><sup>*</sup>Name is required</div>
+        </div>
         <input
           type="text"
           class="form-control"
@@ -14,9 +17,13 @@
           name="name"
           #name="ngModel"
           [(ngModel)]="selectedFood.name"
+          [ngClass]="{'border-danger': (addData.submitted && name.errors?.['required'])}"
         />
   
         <label for="category">Category</label>
+        <div *ngIf="(addData.submitted || category.invalid && category.touched) && category.errors" style="color: red;">
+          <div *ngIf="category.errors['required']"><sup>*</sup>Category is required</div>
+        </div>
         <select
           class="form-control"
           id="category"
@@ -26,6 +33,7 @@
           name="category"
           #category="ngModel"
           [(ngModel)]="selectedFood.category"
+          [ngClass]="{'border-danger': (addData.submitted && category.errors?.['required'])}"
         >
           <option disabled selected value>Select Food Category</option>
           <option>Burger</option>
@@ -36,6 +44,9 @@
         </select>
   
         <label for="type">Type</label>
+        <div *ngIf="(addData.submitted || type.invalid && type.touched) && type.errors" style="color: red;">
+          <div *ngIf="type.errors['required']"><sup>*</sup>Type is required</div>
+        </div>
         <select
           class="form-control"
           id="type"
@@ -45,6 +56,7 @@
           name="type"
           #type="ngModel"
           [(ngModel)]="selectedFood.type"
+          [ngClass]="{'border-danger': (addData.submitted && type.errors?.['required'])}"
         >
           <option disabled selected value>Select Food Type</option>
           <option>Veg</option>
@@ -52,20 +64,32 @@
         </select>
   
         <label for="price">Price</label>
+        <div *ngIf="(addData.submitted || price.invalid && price.touched) && price.errors" style="color: red;">
+          <div *ngIf="price.errors['required']"><sup>*</sup>Price is required</div>
+          <div *ngIf="price.errors['pattern']"><sup>*</sup>Price is invalid</div>
+          <div *ngIf="price.errors['minlength']"><sup>*</sup>Price must be at least 2 characters</div>
+        </div>
         <input
           type="text"
           class="form-control"
           placeholder="Enter The Food Price"
           id="price"
+          
           required
+          pattern="^\d+(,\d{1,2})?$"
+          minlength="2"
   
           ngModel
           name="price"
           #price="ngModel"
           [(ngModel)]="selectedFood.price"
+          [ngClass]="{'border-danger': (addData.submitted && price.errors?.['required'])}"
         />
 
         <label for="availability">Availability</label>
+        <div *ngIf="(addData.submitted || availability.invalid && availability.touched) && availability.errors" style="color: red;">
+          <div *ngIf="availability.errors['required']"><sup>*</sup>Availability is required</div>
+        </div>
         <select
           class="form-control"
           id="availability"
@@ -75,6 +99,7 @@
           name="availability"
           #availability="ngModel"
           [(ngModel)]="selectedFood.availability"
+          [ngClass]="{'border-danger': (addData.submitted && availability.errors?.['required'])}"
         >
           <option disabled selected value>Select Food Availability</option>
           <option value="true">Yes</option>
@@ -82,6 +107,9 @@
         </select>
 
         <label for="description">Description</label>
+        <div *ngIf="(addData.submitted || description.invalid && description.touched) && description.errors" style="color: red;">
+          <div *ngIf="description.errors['required']"><sup>*</sup>Description is required</div>
+        </div>
         <input
           type="text"
           class="form-control"
@@ -93,23 +121,29 @@
           name="description"
           #description="ngModel"
           [(ngModel)]="selectedFood.description"
+          [ngClass]="{'border-danger': (addData.submitted && description.errors?.['required'])}"
         />
 
-        <label for="branch" *ngIf="checkAdmin">Branch Id</label>
-        <select
-          class="form-control"
-          *ngIf="checkAdmin"
-          id="branch"
-          required
+        <div *ngIf="checkAdmin">
+          <label for="branch">Branch Id</label>
+          <div *ngIf="(addData.submitted || branch.invalid && branch.touched) && branch.errors" style="color: red;">
+            <div *ngIf="branch.errors['required']"><sup>*</sup>Branch is required</div>
+          </div>
+          <select
+            class="form-control"
+            id="branch"
+            required
 
-          ngModel
-          name="branch"
-          #branch="ngModel"
-          [(ngModel)]="selectedFood.branch.id"
-        >
-          <option disabled selected value>Select Branch</option>
-          <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
-        </select>
+            ngModel
+            name="branch"
+            #branch="ngModel"
+            [(ngModel)]="selectedFood.branch.id"
+            [ngClass]="{'border-danger': (addData.submitted && branch.errors?.['required'])}"
+          >
+            <option disabled selected value>Select Branch</option>
+            <option *ngFor="let b of branchlist.t" value={{b.id}}>{{ b.id }}. {{ b.name }}, {{ b.city }}</option>
+          </select>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
