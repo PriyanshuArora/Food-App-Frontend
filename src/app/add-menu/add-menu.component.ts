@@ -57,7 +57,7 @@ export class AddMenuComponent implements OnInit {
   }
 
   deleteFood(item:any) {
-    this.foods.pop(item);
+    this.foods.splice(this.foods.indexOf(item), 1);
   }
 
 

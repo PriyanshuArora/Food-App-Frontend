@@ -107,9 +107,9 @@ export class EditFoodorderComponent implements OnInit {
   }
 
   deleteFood(item:any) {
-    this.tempList.pop(item);
+    this.tempList.splice(this.tempList.indexOf(item), 1);
     for(let i = 0; i < item.quantity; i++) {        
-      this.foods.pop(item);
+      this.foods.splice(this.foods.indexOf(item), 1);
     }
   }
 

@@ -73,7 +73,7 @@ export class EditMenuComponent implements OnInit {
   }
 
   deleteFood(item:any) {
-    this.selectedMenu.foods.pop(item);
+    this.selectedMenu.foods.splice(this.selectedMenu.foods.indexOf(item), 1);
   }
 
   updateMenu(form: NgForm) {

@@ -66,9 +66,9 @@ export class AddFoodorderComponent implements OnInit {
   }
 
   deleteFood(item:any) {
-    this.temp.pop(item);
+    this.temp.splice(this.temp.indexOf(item), 1);
     for(let i = 0; i < item.quantity; i++) {        
-      this.foods.pop(item);
+      this.foods.splice(this.foods.indexOf(item), 1);
     }
     console.log(this.temp);
     console.log(this.foods);
