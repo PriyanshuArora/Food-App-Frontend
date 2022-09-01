@@ -14,17 +14,17 @@ import { UserService } from '../Services/user.service';
 export class HomeComponent implements OnInit {
 
   constructor(
-    private menu:MenuService, 
-    private user:UserService, 
-    private branch:BranchService,
-    private food:FoodService,
-    private order:FoodorderService
+    private menuService:MenuService, 
+    private userService:UserService, 
+    private branchService:BranchService,
+    private foodService:FoodService,
+    private orderService:FoodorderService
   ) { }
 
-  checkAdmin = this.user.isAdmin();
-  checkBranchManager = this.user.isBranchManager();
-  username = this.user.getName();
-  branchId = this.user.getBranch();
+  checkAdmin = this.userService.isAdmin();
+  checkBranchManager = this.userService.isBranchManager();
+  username = this.userService.getName();
+  branchId = this.userService.getBranch();
 
   userList:any;
   foodList:any;
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.menu.getMenuList().subscribe((data)=>{
+    this.menuService.getMenuList().subscribe((data)=>{
       this.menuList = data;
       for(let m of this.menuList.t) {
         if(m.branch != null) {
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
       }
     })
     
-    this.user.getUserList().subscribe((data)=>{
+    this.userService.getUserList().subscribe((data)=>{
       this.userList = data;
       for(let u of this.userList.t) {
         if(u.branch != null) {
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       }
     })
 
-    this.food.getFoodList().subscribe((data)=>{
+    this.foodService.getFoodList().subscribe((data)=>{
       this.foodList = data;
       for(let f of this.foodList.t) {
         if(f.branch != null) {
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
       }
     })
 
-    this.order.getFoodOrderList().subscribe((data)=>{
+    this.orderService.getFoodOrderList().subscribe((data)=>{
       this.orderList = data;
       for(let o of this.orderList.t) {
         if(o.branch != null) {
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
       }
     })
 
-    this.branch.getBranchList().subscribe((data)=>{
+    this.branchService.getBranchList().subscribe((data)=>{
       this.branchList = data;
       for(let b of this.branchList.t) {
         if(b.id == this.branchId) {
@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
   }
 
   isLoggedIn() {
-    return this.user.isLoggedIn();
+    return this.userService.isLoggedIn();
   }
   
 }

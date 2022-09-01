@@ -7,27 +7,35 @@ import { UserService } from '../Services/user.service';
 @Component({
   selector: 'app-add-branch',
   templateUrl: './add-branch.component.html',
-  styleUrls: ['./add-branch.component.css']
+  styleUrls: ['./add-branch.component.css'],
 })
 export class AddBranchComponent implements OnInit {
+  constructor(
+    private branchService: BranchService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
-  constructor(private branch:BranchService, private user:UserService, private router:Router) { }
+  userRole = this.userService.getRole();
 
   ngOnInit(): void {
-    if(this.user.getRole() != "Admin") {
-      window.alert("You are not authorised to access this page.");
+    if (this.userRole != 'Admin') {
+      window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
   }
 
-  addBranch(form:NgForm) {
+  addBranch(form: NgForm) {
     console.log(form.value);
-    this.branch.addBranch(form.value).subscribe((res)=>{
-      window.alert("Branch added successfully!");
-      this.router.navigate(['']);
-    },(err)=>{
-      console.log(err);
-      window.alert(err.error.message);
-    });
+    this.branchService.addBranch(form.value).subscribe(
+      (res) => {
+        window.alert('Branch added successfully!');
+        this.router.navigate(['']);
+      },
+      (err) => {
+        console.log(err);
+        window.alert(err.error.message);
+      }
+    );
   }
 }

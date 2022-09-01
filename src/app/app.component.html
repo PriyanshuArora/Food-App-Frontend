@@ -5,7 +5,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <ul class="navbar-nav mr-auto" *ngIf="isLoggedIn()">
       <!-- <li class="nav-item active">
         <a class="nav-link" routerLink="adduser" *ngIf="!isLoggedIn()">Register <span class="sr-only">(current)</span></a>
       </li>
@@ -15,63 +15,65 @@
       <li class="nav-item active">
         <a class="nav-link" *ngIf="isLoggedIn()" role="button" (click)="logOut()">Logout <span class="sr-only">(current)</span></a>
       </li> -->
-      
-      <!-- Admin Services -->
-      <li class="nav-item dropdown" *ngIf="isAdmin()">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          List Service
+      <li class="nav-item dropdown" *ngIf="!isStaff()">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false" *ngIf="isAdmin()">
+          User
+        </a>
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false" *ngIf="isBranchManager()">
+          Staff
         </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" routerLink="userlist">User List</a>
-          <a class="dropdown-item" routerLink="branchlist">Branch List</a>
-          <a class="dropdown-item" routerLink="foodlist">Food List</a>
-          <a class="dropdown-item" routerLink="menulist">Menu List</a>
-          <a class="dropdown-item" routerLink="menu">Menu</a>
-          <a class="dropdown-item" routerLink="orderlist">Food Order List</a>
+          <a class="dropdown-item" routerLink="adduser" *ngIf="isAdmin()">Add User</a>
+          <a class="dropdown-item" routerLink="userlist" *ngIf="isAdmin()">User List</a>
+          <a class="dropdown-item" routerLink="adduser" *ngIf="isBranchManager()">Add Staff</a>
+          <a class="dropdown-item" routerLink="userlist" *ngIf="isBranchManager()">Staff List</a>
         </div>
       </li>
 
       <li class="nav-item dropdown" *ngIf="isAdmin()">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          Add Service
+          Branch
         </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" routerLink="adduser">Add User</a>
           <a class="dropdown-item" routerLink="addbranch">Add Branch</a>
-          <a class="dropdown-item" routerLink="addfood">Add Food</a>
-          <a class="dropdown-item" routerLink="addmenu">Add Menu</a>
-          <a class="dropdown-item" routerLink="addorder">Add Food Order</a>
+          <a class="dropdown-item" routerLink="branchlist">Branch List</a>
         </div>
       </li>
 
-      <!-- Branch Manager Services -->
-      <li class="nav-item dropdown" *ngIf="isBranchManager()">
+      <li class="nav-item dropdown" *ngIf="!isStaff()">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          List Service
+          Food
         </a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" routerLink="userlist">Staff List</a>
+          <a class="dropdown-item" routerLink="addfood">Add Food</a>
           <a class="dropdown-item" routerLink="foodlist">Food List</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown" *ngIf="!isStaff()">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
+          Menu
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="addmenu">Add Menu</a>
           <a class="dropdown-item" routerLink="menulist">Menu List</a>
           <a class="dropdown-item" routerLink="menu">Menu</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
+          Food Order
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="addorder">Add Food Order</a>
           <a class="dropdown-item" routerLink="orderlist">Food Order List</a>
         </div>
       </li>
 
-      <li class="nav-item dropdown" *ngIf="isBranchManager()">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-          Add Service
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" routerLink="adduser">Add Staff</a>
-          <a class="dropdown-item" routerLink="addfood">Add Food</a>
-          <a class="dropdown-item" routerLink="addmenu">Add Menu</a>
-          <a class="dropdown-item" routerLink="addorder">Add Food Order</a>
-        </div>
-      </li>
+      
 
-      <!-- Staff Services -->
-      <li class="nav-item" *ngIf="isStaff()">
+      <!-- <li class="nav-item" *ngIf="isStaff()">
         <a class="nav-link" routerLink="menu">Menu</a>
       </li>
       <li class="nav-item" *ngIf="isStaff()">
@@ -79,12 +81,11 @@
       </li>
       <li class="nav-item" *ngIf="isStaff()">
         <a class="nav-link" routerLink="addorder">Add Food Order</a>
-      </li>
+      </li> -->
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    
+    <form class="form-inline my-2 my-lg-0 ml-auto">
       <button *ngIf="isLoggedIn()" class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="logOut()">Log Out</button>
-    </form>
-    <form class="form-inline my-2 my-lg-0">
       <button *ngIf="!isLoggedIn()" class="btn btn-outline-success my-2 my-sm-0" type="submit" routerLink="loginuser">Login</button>
     </form>
   </div>

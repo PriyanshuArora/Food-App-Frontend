@@ -8,59 +8,72 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.css']
+  styleUrls: ['./edit-user.component.css'],
 })
 export class EditUserComponent implements OnInit {
-
-  constructor(private route:ActivatedRoute,private user:UserService, private branchService:BranchService, private router:Router) { }
-  checkAdmin = this.user.isAdmin();
-  checkBranchManager = this.user.isBranchManager();
-  branchlist:any;
-  result:any;
-  selectedUser:any;
-  branch = { id:'' }
+  constructor(
+    private userService: UserService,
+    private branchService: BranchService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
+  
+  // local variables
+  branchlist: any;
+  userList: any;
+  selectedUser: any;
+  branch = { id: '' };
+  checkAdmin = this.userService.isAdmin();
+  checkBranchManager = this.userService.isBranchManager();
+  userRole = this.userService.getRole();
+  branchId = this.userService.getBranch();
 
   ngOnInit(): void {
-    if(this.user.getRole() == "Staff") {
-      window.alert("You are not authorised to access this page.");
+    if (this.userRole == 'Staff') {
+      window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
-    this.branchService.getBranchList().subscribe((data)=>{
+    this.branchService.getBranchList().subscribe((data) => {
       this.branchlist = data;
-    })
-
-    let id=this.route.snapshot.params['id'];
-    this.user.getUserList().subscribe((data)=>{
-      this.result = data;
-      for(let r of this.result.t) {
-        if(r.id == id) {
-          this.selectedUser = r;
-        }
-      }
-    },(err)=>{
-      console.log(err);
-      window.alert(err.error.message);
     });
+
+    let id = this.route.snapshot.params['id'];
+    this.userService.getUserList().subscribe(
+      (data) => {
+        this.userList = data;
+        for (let r of this.userList.t) {
+          if (r.id == id) {
+            this.selectedUser = r;
+          }
+        }
+      },
+      (err) => {
+        console.log(err);
+        window.alert(err.error.message);
+      }
+    );
   }
 
-  updateUser(form:NgForm) {
-    if(this.user.getRole() == "Branch Manager") {
-      form.value.role = "Staff";
-      this.branch.id = this.user.getBranch();
+  // Method to update user
+  updateUser(form: NgForm) {
+    if (this.userRole == 'Branch Manager') {
+      form.value.role = 'Staff';
+      this.branch.id = this.branchId;
       form.value.branch = this.branch;
     } else {
       this.branch.id = form.value.branch;
       form.value.branch = this.branch;
     }
 
-    console.log(form.value);
-    this.user.editUser(this.selectedUser.id,form.value).subscribe((res)=>{
-      console.log(res);
-      this.router.navigate(['userlist']);
-    },(err)=>{
-      console.log(err);
-      window.alert(err.error.message);
-    });
+    this.userService.editUser(this.selectedUser.id, form.value).subscribe(
+      (res) => {
+        console.log(res);
+        this.router.navigate(['userlist']);
+      },
+      (err) => {
+        console.log(err);
+        window.alert(err.error.message);
+      }
+    );
   }
-
 }

@@ -13,6 +13,7 @@ export class UserService {
   role:any;
   name:any;
 
+  // method to check if user is logged-in
   isLoggedIn() {
     this.id = this.getId();
     this.role = this.getRole();
@@ -25,6 +26,7 @@ export class UserService {
     }
   }
 
+  // method to check if logged-in user is admin
   isAdmin() {
     this.role = this.getRole();
     if(this.role == "Admin") {
@@ -35,6 +37,7 @@ export class UserService {
     }
   }
 
+  // method to check if logged-in user is branch manager
   isBranchManager() {
     this.role = this.getRole();
     if(this.role == "Branch Manager") {
@@ -45,6 +48,7 @@ export class UserService {
     }
   }
 
+  // method to check if logged-in user is staff
   isStaff() {
     this.role = this.getRole();
     if(this.role == "Staff") {
@@ -55,6 +59,7 @@ export class UserService {
     }
   }
 
+  // Logging out user
   logOut() {
     localStorage.removeItem('userid');
     localStorage.removeItem('userrole');
@@ -83,35 +88,28 @@ export class UserService {
     return localStorage.getItem('userbranch');
   }
 
-  // Saving data to the server using http post method
+  // Saving user to the server using http post method
   addUser(user:any) {
     return this.http.post("http://localhost:8080/saveuser",user);
   }
 
-  // Logging user to the server using http post method
+  // Logging user from server using http post method
   logUser(email:any, password:any) {
     let queryParams = {"email":email,"password":password};
     return this.http.get("http://localhost:8080/login",{params:queryParams});
   }
 
-  getManagerList() {
-    return this.http.get("http://localhost:8080/allbranchmanagers");
-  }
-
-  getBranchManager(id:any) {
-    return this.http.get(`http://localhost:8080/branchmanagerbybranch/${id}`);
-  }
-
+  // Getting user list from the server using http get method
   getUserList() {
     return this.http.get("http://localhost:8080/alluser");
   }
 
-  // Deleting user to the server using http delete method
+  // Deleting user from the server using http delete method
   deleteUser(id: any) {
     return this.http.delete(`http://localhost:8080/deleteuser/${id}`);
   }
 
-  // Editing user to the server using http put method
+  // Updating user from the server using http put method
   editUser(id: any, user: any) {
     return this.http.put(`http://localhost:8080/updateuser/${id}`, user);
   }

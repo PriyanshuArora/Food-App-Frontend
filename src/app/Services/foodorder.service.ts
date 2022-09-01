@@ -14,16 +14,17 @@ export class FoodorderService {
     return this.http.post("http://localhost:8080/savefoodorder",order);
   }
 
+  // Getting food order list from the server using http get method
   getFoodOrderList() {
     return this.http.get("http://localhost:8080/allfoodorder");
   }
 
-  // Deleting food order to the server using http delete method
+  // Deleting food order from the server using http delete method
   deleteFoodOrder(id: any) {
     return this.http.delete(`http://localhost:8080/deletefoodorder/${id}`);
   }
 
-  // Editing food order to the server using http put method
+  // Updating food order from the server using http put method
   editFoodOrder(id: any, order: any) {
     return this.http.put(`http://localhost:8080/updatefoodorder/${id}`, order);
   }

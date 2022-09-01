@@ -9,31 +9,31 @@ import { UserService } from '../Services/user.service';
 @Component({
   selector: 'app-edit-foodorder',
   templateUrl: './edit-foodorder.component.html',
-  styleUrls: ['./edit-foodorder.component.css']
+  styleUrls: ['./edit-foodorder.component.css'],
 })
 export class EditFoodorderComponent implements OnInit {
 
   constructor(
-    private user: UserService,
-    private router: Router,
-    private order: FoodorderService,
+    private userService: UserService,
+    private orderService: FoodorderService,
     private foodService: FoodService,
     private branchService: BranchService,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private router: Router,
   ) {}
 
   // Local Variables
-  result:any;
+  foodOrderList:any;
   selectedOrder:any;
   branch = { id: '' };
-  temp:any
   foods:any = [];
-  tempList:any = [];
-  foodItem:any = { id: '' };
-  checkBranchManager = this.user.isBranchManager();
-  checkAdmin = this.user.isAdmin();
+  foodsTemp:any = [];
   foodlist: any;
   branchlist:any;
+  checkBranchManager = this.userService.isBranchManager();
+  checkAdmin = this.userService.isAdmin();
+  userRole = this.userService.getRole();
+  branchId = this.userService.getBranch();
 
   ngOnInit(): void {
     this.foodService.getFoodList().subscribe((data)=>{
@@ -44,52 +44,27 @@ export class EditFoodorderComponent implements OnInit {
     })
 
     let id=this.route.snapshot.params['id'];
-    this.order.getFoodOrderList().subscribe((data)=>{
-      this.result = data;
-      for(let r of this.result.t) {
+    this.orderService.getFoodOrderList().subscribe((data)=>{
+      this.foodOrderList = data;
+      for(let r of this.foodOrderList.t) {
         if(r.id == id) {
           this.selectedOrder = r;
-          
-          for(let o of this.selectedOrder.foods) {
-            if(this.tempList==0) {
-              this.temp = { id: '', quantity: 1 };
-              this.temp.id = o.id;
-              this.tempList.push(this.temp);
-            }
-            else {
-              for(let i of this.tempList) {
-                if(i.id == o.id) {
-                  ++i.quantity;
-                }
-                else {
-                  this.temp = { id: '', quantity: 0 };
-                  this.temp.id = o.id;
-                  this.tempList.push(this.temp);
-                  console.log(this.temp);
-                  console.log(this.tempList);
-                }
-              }
-            }
-            this.temp = { id: '', quantity: 0 };
-            this.temp.id = o.id;
-            this.foods.push(this.temp);
-          }
+          this.foodsTemp = this.selectedOrder.foods;
         }
       }
-      // console.log(this.tempList);
-      // console.log(this.foods);
     },(err)=>{
       console.log(err);
       window.alert(err.error.message);
     });
   }
 
+  // Method to add foods in order
   addFood(form: NgForm) {
     
     if(form.value.id == '') {
       window.alert("Select any food first!");
     }
-    else if(this.foods.some((item: { id: any; }) => item.id == form.value.id)) {
+    else if(this.foodsTemp.some((item: { id: any; }) => item.id == form.value.id)) {
       window.alert("Food already added! Select any other food.");
     }
     else {
@@ -97,33 +72,49 @@ export class EditFoodorderComponent implements OnInit {
         window.alert("Enter food quantity!");
       }
       else {
-        this.tempList.push(form.value);
         for(let i = 0; i < form.value.quantity; i++) {        
-          this.foods.push(form.value);
+          this.selectedOrder.foods.push(Object.assign({}, form.value));
         }
         form.resetForm();
       }
     }
   }
 
+  // Method to delete foods from order
+  updateFood(id:any,quantity:any) {
+    
+  }
+
+  // Method to delete foods from order
   deleteFood(item:any) {
-    this.tempList.splice(this.tempList.indexOf(item), 1);
-    for(let i = 0; i < item.quantity; i++) {        
-      this.foods.splice(this.foods.indexOf(item), 1);
+    this.foodsTemp.splice(this.foodsTemp.indexOf(item), 1);
+    for(let i = 0; i < item.quantity; i++) {   
+      if(this.selectedOrder.foods.indexOf(item)>-1) {
+        this.selectedOrder.foods.splice(this.foods.indexOf(item), 1);
+      }
     }
   }
 
+  // Method to update food order
   updateFoodOrder(form: NgForm) {
-    form.value.foods=this.foods;
-    if(this.user.getRole() != "Admin") {
-      this.branch.id = this.user.getBranch();
+    // console.log(this.foodsTemp);
+    // for(let i of this.foodsTemp) {
+    //   console.log(i + "i");
+    //   for(let j = 0; j < i.quantity; j++) {
+    //     console.log(j + "j");
+    //     this.foods.push(Object.assign({}, i));
+    //   }
+    // }
+    form.value.foods=this.selectedOrder.foods;
+    if(this.userRole != "Admin") {
+      this.branch.id = this.branchId;
       form.value.branch = this.branch;
     } else {
       this.branch.id = form.value.branch;
       form.value.branch = this.branch;
     }
 
-    this.order.editFoodOrder(this.selectedOrder.id,form.value).subscribe((res)=>{
+    this.orderService.editFoodOrder(this.selectedOrder.id,form.value).subscribe((res)=>{
       console.log(res);
       window.alert("Food Order updated successfully!");
       this.router.navigate(['orderlist']);

@@ -8,42 +8,56 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-edit-branch',
   templateUrl: './edit-branch.component.html',
-  styleUrls: ['./edit-branch.component.css']
+  styleUrls: ['./edit-branch.component.css'],
 })
 export class EditBranchComponent implements OnInit {
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private branchService: BranchService,
+    private router: Router
+  ) {}
 
-  constructor(private route:ActivatedRoute,private user:UserService, private branch:BranchService, private router:Router) { }
-  result:any;
-  selectedBranch:any;
+  // local variables
+  branchList: any;
+  selectedBranch: any;
+  userRole = this.userService.getRole();
 
   ngOnInit(): void {
-    if(this.user.getRole() != "Admin") {
-      window.alert("You are not authorised to access this page.");
+    if (this.userRole != 'Admin') {
+      window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
 
-    let id=this.route.snapshot.params['id'];
-    this.branch.getBranchList().subscribe((data)=>{
-      this.result = data;
-      for(let r of this.result.t) {
-        if(r.id == id) {
-          this.selectedBranch = r;
+    let id = this.route.snapshot.params['id'];
+    this.branchService.getBranchList().subscribe(
+      (data) => {
+        this.branchList = data;
+        for (let r of this.branchList.t) {
+          if (r.id == id) {
+            this.selectedBranch = r;
+          }
         }
+      },
+      (err) => {
+        console.log(err);
+        window.alert(err.error.message);
       }
-    },(err)=>{
-      console.log(err);
-      window.alert(err.error.message);
-    });
+    );
   }
 
-  updateBranch(form:NgForm) {
+  // Method to update branch
+  updateBranch(form: NgForm) {
     console.log(form.value);
-    this.branch.editBranch(this.selectedBranch.id,form.value).subscribe((res)=>{
-      console.log(res);
-      this.router.navigate(['branchlist']);
-    },(err)=>{
-      console.log(err);
-      window.alert(err.error.message);
-    });
+    this.branchService.editBranch(this.selectedBranch.id, form.value).subscribe(
+      (res) => {
+        console.log(res);
+        this.router.navigate(['branchlist']);
+      },
+      (err) => {
+        console.log(err);
+        window.alert(err.error.message);
+      }
+    );
   }
 }

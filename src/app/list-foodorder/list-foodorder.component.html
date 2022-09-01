@@ -8,21 +8,32 @@
           <th scope="col">Phone</th>
           <th scope="col">Date</th>
           <th scope="col" *ngIf="checkAdmin">Branch</th>
-          <th scope="col">Foods</th>
+          <th>
+            <table class="col">
+              <tr class="row justify-content-center">Foods</tr>
+              <tr class="row">
+                <div class="col-8 food-row">Name</div>
+                <div class="col-4 food-row">Quantity</div>
+              </tr>
+            </table>
+          </th>
           <th scope="col">Price</th>
           <th scope="col">Edit</th>
           <th scope="col">Delete</th>
         </tr>
       </thead>
       <tbody *ngIf="!checkAdmin">
-        <tr *ngFor="let b of result.t | filterByBranch">
+        <tr *ngFor="let b of orderList.t | filterByBranch">
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.phone }}</td>
           <td>{{ b.date | date:'medium' }}</td>
           <td>
-            <table>
-              <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
+            <table class="col">
+              <tr *ngFor="let f of b.foods | orderPipe" class="row">
+                <div class="col-10">{{ f.name }}</div>
+                <div class="col-2">{{ f.quantity }}</div>
+              </tr>
             </table>
           </td>
           <td>{{ b.price }}</td>
@@ -32,7 +43,7 @@
       </tbody>
 
       <tbody *ngIf="checkAdmin">
-        <tr *ngFor="let b of result.t">
+        <tr *ngFor="let b of orderList.t">
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.phone }}</td>
@@ -40,7 +51,10 @@
           <td>{{ b.branch.id }}</td>
           <td>
             <table>
-              <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
+              <tr *ngFor="let f of b.foods" class="row">
+                <div class="col-10">{{ f.name }}</div>
+                <div class="col-2">{{ f.quantity }}</div>
+              </tr>
             </table>
           </td>
           <td>{{ b.price }}</td>

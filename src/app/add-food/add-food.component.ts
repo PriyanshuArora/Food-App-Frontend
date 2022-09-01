@@ -12,20 +12,21 @@ import { UserService } from '../Services/user.service';
 })
 export class AddFoodComponent implements OnInit {
   constructor(
-    private user: UserService,
-    private router: Router,
-    private food: FoodService,
-    private branchService:BranchService
+    private userService: UserService,
+    private foodService: FoodService,
+    private branchService:BranchService,
+    private router: Router
   ) {}
 
   // Local Variables
   branch = { id: '' };
   branchlist:any;
-  checkBranchManager = this.user.isBranchManager();
-  checkAdmin = this.user.isAdmin();
+  checkBranchManager = this.userService.isBranchManager();
+  checkAdmin = this.userService.isAdmin();
+  userRole = this.userService.getRole();
 
   ngOnInit(): void {
-    if (this.user.getRole() == 'Staff') {
+    if (this.userRole == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
@@ -34,17 +35,17 @@ export class AddFoodComponent implements OnInit {
     })
   }
 
-  // Methods
+  // Method to save food
   addFood(form: NgForm) {
-    if(this.user.getRole() == "Branch Manager") {
-      this.branch.id = this.user.getBranch();
+    if(this.userRole == "Branch Manager") {
+      this.branch.id = this.userService.getBranch();
       form.value.branch = this.branch;
     } else {
       this.branch.id = form.value.branch;
       form.value.branch = this.branch;
     }
 
-    this.food.addFood(form.value).subscribe(
+    this.foodService.addFood(form.value).subscribe(
       (res) => {
         this.reloadComponent();
         window.alert("Food added successfully!");

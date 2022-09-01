@@ -14,24 +14,24 @@ import { UserService } from '../Services/user.service';
 export class AddMenuComponent implements OnInit {
 
   constructor(
-    private user: UserService,
-    private router: Router,
+    private userService: UserService,
     private menu: MenuService,
     private foodService: FoodService,
-    private branchService: BranchService
+    private branchService: BranchService,
+    private router: Router
   ) {}
 
   // Local Variables
   branch = { id: '' };
   foods:any = [];
-  foodItem:any = { id: '' };
-  checkBranchManager = this.user.isBranchManager();
-  checkAdmin = this.user.isAdmin();
   foodlist: any;
   branchlist:any;
+  checkBranchManager = this.userService.isBranchManager();
+  checkAdmin = this.userService.isAdmin();
+  userRole = this.userService.getRole();
 
   ngOnInit(): void {
-    if (this.user.getRole() == 'Staff') {
+    if (this.userRole == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
@@ -43,6 +43,7 @@ export class AddMenuComponent implements OnInit {
     })
   }
 
+  // Method to add foods in menu
   addFood(form: NgForm) {
     if(form.value.id == '') {
       window.alert("Select any food first!");
@@ -56,16 +57,16 @@ export class AddMenuComponent implements OnInit {
     }
   }
 
+  // Method to delete foods from menu
   deleteFood(item:any) {
     this.foods.splice(this.foods.indexOf(item), 1);
   }
 
-
-  // Methods
+  // Method to Save menu
   addMenu(form: NgForm) {
     form.value.foods=this.foods;
-    if(this.user.getRole() == "Branch Manager") {
-      this.branch.id = this.user.getBranch();
+    if(this.userRole == "Branch Manager") {
+      this.branch.id = this.userService.getBranch();
       form.value.branch = this.branch;
     } else {
       this.branch.id = form.value.branch;

@@ -28,7 +28,7 @@ export class UserListPipe implements PipeTransform {
         temp.push(u);
       }
     }
-    
+
     return temp;
   }
 }

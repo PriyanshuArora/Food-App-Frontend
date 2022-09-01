@@ -12,11 +12,11 @@
           <th scope="col">Description</th>
           <th scope="col" *ngIf="checkAdmin">Branch</th>
           <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
+          <th scope="col">Change Availability</th>
         </tr>
       </thead>
       <tbody *ngIf="checkAdmin">
-        <tr *ngFor="let b of result.t">
+        <tr *ngFor="let b of foodList.t">
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.category }}</td>
@@ -27,11 +27,14 @@
           <td>{{ b.description }}</td>
           <td>{{ b.branch.id }}</td>
           <td><button class="btn btn-primary" type="button" [routerLink]="['/editfood/',b.id]">Edit</button></td>
-          <td><button class="btn btn-secondary" type="button" (click)="deleteFood(b.id)">Delete</button></td>
+          <td>
+            <button class="btn btn-danger" type="button" (click)="changeAvailability(b.id)" *ngIf=b.availability>No</button>
+            <button class="btn btn-success" type="button" (click)="changeAvailability(b.id)" *ngIf=!b.availability>Yes</button>
+          </td>
         </tr>
       </tbody>
       <tbody *ngIf="checkBranchManager">
-        <tr *ngFor="let b of result.t | filterByBranch">
+        <tr *ngFor="let b of foodList.t | filterByBranch">
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.category }}</td>
@@ -41,7 +44,10 @@
           <td *ngIf=!b.availability>No</td>
           <td>{{ b.description }}</td>
           <td><button class="btn btn-primary" type="button" [routerLink]="['/editfood/',b.id]">Edit</button></td>
-          <td><button class="btn btn-secondary" type="button" (click)="deleteFood(b.id)">Delete</button></td>
+          <td>
+            <button class="btn btn-danger" type="button" (click)="changeAvailability(b.id)" *ngIf=b.availability>No</button>
+            <button class="btn btn-success" type="button" (click)="changeAvailability(b.id)" *ngIf=!b.availability>Yes</button>
+          </td>
         </tr>
       </tbody>
     </table>

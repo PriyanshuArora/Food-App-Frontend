@@ -8,56 +8,71 @@ import { UserService } from '../Services/user.service';
 @Component({
   selector: 'app-edit-food',
   templateUrl: './edit-food.component.html',
-  styleUrls: ['./edit-food.component.css']
+  styleUrls: ['./edit-food.component.css'],
 })
 export class EditFoodComponent implements OnInit {
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private foodService: FoodService,
+    private branchService: BranchService,
+    private router: Router
+  ) {}
 
-  constructor(private route:ActivatedRoute, private user:UserService, private food:FoodService, private branchService:BranchService, private router:Router) { }
-  result:any;
-  selectedFood:any;
-  branchlist:any;
+  // local variables
+  foodList: any;
+  selectedFood: any;
+  branchlist: any;
   branch = { id: '' };
-  checkAdmin = this.user.isAdmin();
+  checkAdmin = this.userService.isAdmin();
+  userRole = this.userService.getRole();
+  branchId = this.userService.getBranch();
 
   ngOnInit(): void {
-    if(this.user.getRole() == "Staff") {
-      window.alert("You are not authorised to access this page.");
+    if (this.userRole == 'Staff') {
+      window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
 
-    let id=this.route.snapshot.params['id'];
-    this.food.getFoodList().subscribe((data)=>{
-      this.result = data;
-      for(let r of this.result.t) {
-        if(r.id == id) {
-          this.selectedFood = r;
+    let id = this.route.snapshot.params['id'];
+    this.foodService.getFoodList().subscribe(
+      (data) => {
+        this.foodList = data;
+        for (let r of this.foodList.t) {
+          if (r.id == id) {
+            this.selectedFood = r;
+          }
         }
+      },
+      (err) => {
+        console.log(err);
+        window.alert(err.error.message);
       }
-    },(err)=>{
-      console.log(err);
-      window.alert(err.error.message);
-    });
-    this.branchService.getBranchList().subscribe((data)=>{
+    );
+    this.branchService.getBranchList().subscribe((data) => {
       this.branchlist = data;
-    })
+    });
   }
 
-  updateFood(form:NgForm) {
-    if(this.user.getRole() == "Branch Manager") {
-      this.branch.id = this.user.getBranch();
-    form.value.branch = this.branch;
+  // Method to update food
+  updateFood(form: NgForm) {
+    if (this.userRole == 'Branch Manager') {
+      this.branch.id = this.branchId;
+      form.value.branch = this.branch;
     } else {
       this.branch.id = form.value.branch;
       form.value.branch = this.branch;
     }
-    
-    this.food.editFood(this.selectedFood.id,form.value).subscribe((res)=>{
-      console.log(res);
-      this.router.navigate(['foodlist']);
-    },(err)=>{
-      console.log(err);
-      window.alert(err.error.message);
-    });
-  }
 
+    this.foodService.editFood(this.selectedFood.id, form.value).subscribe(
+      (res) => {
+        console.log(res);
+        this.router.navigate(['foodlist']);
+      },
+      (err) => {
+        console.log(err);
+        window.alert(err.error.message);
+      }
+    );
+  }
 }

@@ -14,27 +14,27 @@ import { UserService } from '../Services/user.service';
 export class EditMenuComponent implements OnInit {
 
   constructor(
-    private user: UserService,
-    private router: Router,
-    private menu: MenuService,
+    private userService: UserService,
+    private menuService: MenuService,
     private foodService: FoodService,
     private branchService: BranchService,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private router: Router
   ) {}
 
   // Local Variables
-  result:any;
+  menuList:any;
   selectedMenu:any;
   branch = { id: '' };
-  foods:any = [];
-  foodItem:any = { id: '' };
-  checkBranchManager = this.user.isBranchManager();
-  checkAdmin = this.user.isAdmin();
   foodlist: any;
   branchlist:any;
+  checkBranchManager = this.userService.isBranchManager();
+  checkAdmin = this.userService.isAdmin();
+  userRole = this.userService.getRole();
+  branchId = this.userService.getBranch();
 
   ngOnInit(): void {
-    if (this.user.getRole() == 'Staff') {
+    if (this.userRole == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
@@ -46,9 +46,9 @@ export class EditMenuComponent implements OnInit {
     })
 
     let id=this.route.snapshot.params['id'];
-    this.menu.getMenuList().subscribe((data)=>{
-      this.result = data;
-      for(let r of this.result.t) {
+    this.menuService.getMenuList().subscribe((data)=>{
+      this.menuList = data;
+      for(let r of this.menuList.t) {
         if(r.id == id) {
           this.selectedMenu = r;
         }
@@ -59,6 +59,7 @@ export class EditMenuComponent implements OnInit {
     });
   }
 
+  // Method to add foods in menu
   addFood(form: NgForm) {
     if(form.value.id == '') {
       window.alert("Select any food first!");
@@ -72,21 +73,23 @@ export class EditMenuComponent implements OnInit {
     }
   }
 
+  // Method to delete foods from order
   deleteFood(item:any) {
     this.selectedMenu.foods.splice(this.selectedMenu.foods.indexOf(item), 1);
   }
 
+  // Method to update menu
   updateMenu(form: NgForm) {
     form.value.foods=this.selectedMenu.foods;
-    if(this.user.getRole() == "Branch Manager") {
-      this.branch.id = this.user.getBranch();
+    if(this.userRole == "Branch Manager") {
+      this.branch.id = this.branchId;
       form.value.branch = this.branch;
     } else {
       this.branch.id = form.value.branch;
       form.value.branch = this.branch;
     }
 
-    this.menu.editMenu(this.selectedMenu.id,form.value).subscribe((res)=>{
+    this.menuService.editMenu(this.selectedMenu.id,form.value).subscribe((res)=>{
       console.log(res);
       window.alert("Menu updated successfully!");
       this.router.navigate(['menulist']);

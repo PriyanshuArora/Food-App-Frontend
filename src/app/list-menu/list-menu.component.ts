@@ -6,34 +6,41 @@ import { UserService } from '../Services/user.service';
 @Component({
   selector: 'app-list-menu',
   templateUrl: './list-menu.component.html',
-  styleUrls: ['./list-menu.component.css']
+  styleUrls: ['./list-menu.component.css'],
 })
 export class ListMenuComponent implements OnInit {
+  constructor(
+    private menuService: MenuService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
-  constructor(private menu:MenuService, private user:UserService, private router:Router) { }
-  result:any;
-  checkAdmin = this.user.isAdmin();
-  checkBranchManager = this.user.isBranchManager();
+  // local variables
+  menuList: any;
+  checkAdmin = this.userService.isAdmin();
+  checkBranchManager = this.userService.isBranchManager();
+  userRole = this.userService.getRole();
 
   ngOnInit(): void {
-    this.menu.getMenuList().subscribe((data)=>{
-      this.result = data;
-      console.log(this.result.t);
-    })
-    if(this.user.getRole() == "Staff") {
-      window.alert("You are not authorised to access this page.");
+    this.menuService.getMenuList().subscribe((data) => {
+      this.menuList = data;
+    });
+    if (this.userRole == 'Staff') {
+      window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
   }
 
-  deleteMenu(id:any) {
-    this.menu.deleteMenu(id).subscribe((res)=>{
-      window.alert("Menu deleted successfully!");
-      this.ngOnInit();
-    },(err)=>{
-      console.log(err);
-      window.alert(err.message);
-    });
+  deleteMenu(id: any) {
+    this.menuService.deleteMenu(id).subscribe(
+      (res) => {
+        window.alert('Menu deleted successfully!');
+        this.ngOnInit();
+      },
+      (err) => {
+        console.log(err);
+        window.alert(err.message);
+      }
+    );
   }
-
 }

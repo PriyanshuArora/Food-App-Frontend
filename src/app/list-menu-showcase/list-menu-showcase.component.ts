@@ -6,21 +6,21 @@ import { UserService } from '../Services/user.service';
 @Component({
   selector: 'app-list-menu-showcase',
   templateUrl: './list-menu-showcase.component.html',
-  styleUrls: ['./list-menu-showcase.component.css']
+  styleUrls: ['./list-menu-showcase.component.css'],
 })
 export class ListMenuShowcaseComponent implements OnInit {
-
-  constructor(private menu:MenuService, private user:UserService, private router:Router) { }
-  result:any;
-  checkAdmin = this.user.isAdmin();
-  checkBranchManager = this.user.isBranchManager();
-
+  constructor(
+    private menuService: MenuService,
+    private userService: UserService
+  ) {}
+  result: any;
+  checkAdmin = this.userService.isAdmin();
+  checkBranchManager = this.userService.isBranchManager();
 
   ngOnInit(): void {
-    this.menu.getMenuList().subscribe((data)=>{
+    this.menuService.getMenuList().subscribe((data) => {
       this.result = data;
       console.log(this.result.t);
-    })
+    });
   }
-
 }

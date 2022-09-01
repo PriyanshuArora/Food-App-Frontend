@@ -42,7 +42,7 @@
             />
     
             <label for="listfood">Foods</label>
-            <div *ngFor="let u of temp">                    
+            <div *ngFor="let u of foodsTemp">                    
                 <div class="input-group">
                     <p class="form-control btn-outline-secondary disabled" *ngFor="let f of foodlist.t | foodById:u.id">{{ f.category }} | {{ f.name }} ({{ f.type }})</p>
                     <div class="input-group-append">
@@ -110,6 +110,7 @@
                             class="btn btn-outline-secondary"
                             placeholder="Quantity"
                             id="quantity"
+                            min="1"
                             required
     
                             ngModel
@@ -143,7 +144,7 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" [ngClass]="foodsTemp.length != 0?'enabled':'disabled'">Submit</button>
     </form>
 </div>
   

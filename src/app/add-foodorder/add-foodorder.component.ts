@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { BranchService } from '../Services/branch.service';
 import { FoodService } from '../Services/food.service';
 import { FoodorderService } from '../Services/foodorder.service';
-import { MenuService } from '../Services/menu.service';
 import { UserService } from '../Services/user.service';
 
 @Component({
@@ -15,24 +14,21 @@ import { UserService } from '../Services/user.service';
 export class AddFoodorderComponent implements OnInit {
 
   constructor(
-    private user: UserService,
-    private router: Router,
+    private userService: UserService,
     private foodService: FoodService,
-    private order: FoodorderService,
-    private branchService: BranchService
+    private orderService: FoodorderService,
+    private branchService: BranchService,
+    private router: Router
   ) {}
 
   // Local Variables
   branch = { id: '' };
-  food = { id: '' };
-  temp:any = [];
   foods:any = [];
   foodsTemp:any = [];
-  foodItem:any = { id: '' };
-  checkBranchManager = this.user.isBranchManager();
-  checkAdmin = this.user.isAdmin();
   foodlist: any;
   branchlist:any;
+  checkAdmin = this.userService.isAdmin();
+  userRole = this.userService.getRole();
 
   ngOnInit(): void {
     this.foodService.getFoodList().subscribe((data)=>{
@@ -44,6 +40,7 @@ export class AddFoodorderComponent implements OnInit {
     console.log(this.foodlist);
   }
 
+  // Method to add foods in order
   addFood(form: NgForm) {
     if(form.value.id == '') {
       window.alert("Select any food first!");
@@ -56,7 +53,7 @@ export class AddFoodorderComponent implements OnInit {
         window.alert("Enter food quantity!");
       }
       else {
-        this.temp.push(form.value);
+        this.foodsTemp.push(form.value);
         for(let i = 0; i < form.value.quantity; i++) {        
           this.foods.push(form.value);
         }
@@ -65,29 +62,28 @@ export class AddFoodorderComponent implements OnInit {
     }
   }
 
+  // Method to delete foods from order
   deleteFood(item:any) {
-    this.temp.splice(this.temp.indexOf(item), 1);
+    this.foodsTemp.splice(this.foodsTemp.indexOf(item), 1);
     for(let i = 0; i < item.quantity; i++) {        
       this.foods.splice(this.foods.indexOf(item), 1);
     }
-    console.log(this.temp);
-    console.log(this.foods);
   }
 
 
-  // Methods
+  // Method to save food order
   addFoodOrder(form: NgForm) {
     form.value.foods=this.foods;
     form.value.status="Ordered";
-    if(this.user.getRole() == "Admin") {
+    if(this.userRole == "Admin") {
       this.branch.id = form.value.branch;
       form.value.branch = this.branch;
     } else {
-      this.branch.id = this.user.getBranch();
+      this.branch.id = this.userService.getBranch();
       form.value.branch = this.branch;
     }
 
-    this.order.addFoodOrder(form.value).subscribe(
+    this.orderService.addFoodOrder(form.value).subscribe(
       (res) => {
         this.reloadComponent();
         window.alert("Food order added successfully!");

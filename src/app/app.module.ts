@@ -26,6 +26,7 @@ import { EditFoodorderComponent } from './edit-foodorder/edit-foodorder.componen
 import { FilterByBranchPipe } from './Pipes/filter-by-branch.pipe';
 import { ListMenuShowcaseComponent } from './list-menu-showcase/list-menu-showcase.component';
 import { HomeComponent } from './home/home.component';
+import { OrderPipePipe } from './Pipes/order-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { HomeComponent } from './home/home.component';
     EditFoodorderComponent,
     FilterByBranchPipe,
     ListMenuShowcaseComponent,
-    HomeComponent
+    HomeComponent,
+    OrderPipePipe
   ],
   imports: [
     BrowserModule,

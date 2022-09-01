@@ -2,8 +2,8 @@
   <h1 class="text-center fade">Hi {{ username }}, Welcome to the Food-App</h1>
 </div>
 <img class="bg-home fade" src="../assets/bghome.jpg"/>
-<h3 class="text-center fade" *ngIf="!isLoggedIn()">Login! to get started</h3>
-<h3 class="text-center fade" *ngIf="isLoggedIn()">Today's Menu</h3>
+<h3 class="text-center fade heading" *ngIf="!isLoggedIn()">Login! to get started</h3>
+<h3 class="text-center fade heading" *ngIf="isLoggedIn()">Today's Menu</h3>
 <marquee behavior="scroll" direction="left" scrollamount="7" *ngIf="isLoggedIn()" class="fade">
   <div class="container justify-content-center menuMarquee" *ngIf="!checkAdmin">
     <div class="card borcard-borderedder border-danger col-5" *ngFor="let b of menuList.t | filterByBranch">

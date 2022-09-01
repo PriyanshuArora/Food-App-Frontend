@@ -65,11 +65,11 @@
             </select>
     
             <label for="listfood">Foods</label>
-            <div *ngFor="let u of tempList">                    
+            <div *ngFor="let u of foodsTemp | orderPipe">                    
                 <div class="input-group">
                     <p class="form-control btn-outline-secondary disabled" *ngFor="let f of foodlist.t | foodById:u.id">{{ f.category }} | {{ f.name }} ({{ f.type }})</p>
                     <div class="input-group-append">
-                        <a class="btn btn-outline-secondary disabled">{{u.quantity}}</a>
+                        <a class="btn btn-outline-secondary">{{u.quantity}}</a>
                         <a class="btn btn-outline-secondary" (click)="deleteFood(u)">Delete</a>
                     </div>
                 </div><br>
@@ -110,6 +110,7 @@
                         class="btn btn-outline-secondary"
                         placeholder="Quantity"
                         id="quantity"
+                        min="1"
 
                         ngModel
                         name="quantity"
