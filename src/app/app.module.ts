@@ -27,6 +27,7 @@ import { FilterByBranchPipe } from './Pipes/filter-by-branch.pipe';
 import { ListMenuShowcaseComponent } from './list-menu-showcase/list-menu-showcase.component';
 import { HomeComponent } from './home/home.component';
 import { OrderPipePipe } from './Pipes/order-pipe.pipe';
+import { GenerateBillComponent } from './generate-bill/generate-bill.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { OrderPipePipe } from './Pipes/order-pipe.pipe';
     FilterByBranchPipe,
     ListMenuShowcaseComponent,
     HomeComponent,
-    OrderPipePipe
+    OrderPipePipe,
+    GenerateBillComponent
   ],
   imports: [
     BrowserModule,

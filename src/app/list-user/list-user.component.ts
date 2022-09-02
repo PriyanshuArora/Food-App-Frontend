@@ -22,6 +22,7 @@ export class ListUserComponent implements OnInit {
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
   userRole = this.userService.getRole();
+  userId = this.userService.getId();
   branchId = this.userService.getBranch();
 
   ngOnInit(): void {

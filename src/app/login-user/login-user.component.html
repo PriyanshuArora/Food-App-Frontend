@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container anim-top">
     <h3>Login User</h3>
     <form #logData="ngForm" (ngSubmit)="logData.form.valid && logUser(logData)">
       <div class="form-group">
@@ -37,7 +37,7 @@
           [ngClass]="{'border-danger': (logData.submitted && password.errors?.['required'])}"
         />
       </div>
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary anim-left">Login</button>
     </form>
-  </div>
+</div>
   

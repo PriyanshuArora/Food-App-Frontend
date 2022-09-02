@@ -19,6 +19,7 @@
           </th>
           <th scope="col">Price</th>
           <th scope="col">Edit</th>
+          <th scope="col">Bill</th>
           <th scope="col">Delete</th>
         </tr>
       </thead>
@@ -27,17 +28,25 @@
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.phone }}</td>
-          <td>{{ b.date | date:'medium' }}</td>
           <td>
-            <table class="col">
-              <tr *ngFor="let f of b.foods | orderPipe" class="row">
-                <div class="col-10">{{ f.name }}</div>
-                <div class="col-2">{{ f.quantity }}</div>
+            <table>
+              <tr class="row">
+                <div class="col-12">{{ b.date | date:'shortDate' }}</div>
+              </tr>
+              <tr class="row">
+                <div class="col-12">{{ b.date | date:'shortTime' }}</div>
               </tr>
             </table>
           </td>
+          <td>
+            <tr *ngFor="let f of b.foods | orderPipe" class="row">
+              <div class="col-10">{{ f.name }}</div>
+              <div class="col-2">{{ f.quantity }}</div>
+            </tr>
+          </td>
           <td>{{ b.price }}</td>
           <td><button class="btn btn-primary" type="button" [routerLink]="['/editorder/',b.id]">Edit</button></td>
+          <td><button class="btn btn-success" type="button" [routerLink]="['/bill/',b.id]">Bill</button></td>
           <td><button class="btn btn-secondary" type="button" (click)="deleteFoodOrder(b.id)">Delete</button></td>
         </tr>
       </tbody>
@@ -47,18 +56,26 @@
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.phone }}</td>
-          <td>{{ b.date | date:'medium' }}</td>
-          <td>{{ b.branch.id }}</td>
           <td>
             <table>
-              <tr *ngFor="let f of b.foods" class="row">
-                <div class="col-10">{{ f.name }}</div>
-                <div class="col-2">{{ f.quantity }}</div>
+              <tr class="row">
+                <div class="col-12">{{ b.date | date:'shortDate' }}</div>
+              </tr>
+              <tr class="row">
+                <div class="col-12">{{ b.date | date:'shortTime' }}</div>
               </tr>
             </table>
           </td>
+          <td>{{ b.branch.id }}</td>
+          <td>
+            <tr *ngFor="let f of b.foods | orderPipe" class="row">
+              <div class="col-10">{{ f.name }}</div>
+              <div class="col-2">{{ f.quantity }}</div>
+            </tr>
+          </td>
           <td>{{ b.price }}</td>
           <td><button class="btn btn-primary" type="button" [routerLink]="['/editorder/',b.id]">Edit</button></td>
+          <td><button class="btn btn-success" type="button" [routerLink]="['/bill/',b.id]">Bill</button></td>
           <td><button class="btn btn-secondary" type="button" (click)="deleteFoodOrder(b.id)">Delete</button></td>
         </tr>
       </tbody>

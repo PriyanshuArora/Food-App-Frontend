@@ -10,7 +10,10 @@ export class AppComponent {
   title = 'Food-App';
 
   constructor(private service:UserService) {}
-  username = this.service.getName();
+
+  getUserName() {
+    return this.service.getName();
+  }
 
   isLoggedIn() {
     return this.service.isLoggedIn();

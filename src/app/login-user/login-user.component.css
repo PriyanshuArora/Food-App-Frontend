@@ -12,3 +12,27 @@
 .invalid-feedback.form-error {
     display: block;
 }
+.anim-left {
+    animation: moveToRight 0.5s ease-in-out;
+    animation-delay: 5ms;
+}
+.anim-top {
+    animation: moveToBottom 0.5s ease-in-out;
+    animation-delay: 5ms;
+}
+@keyframes moveToRight {
+    0% {
+        transform: translateX(-300px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}
+@keyframes moveToBottom {
+    0% {
+        transform: translateY(-300px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}

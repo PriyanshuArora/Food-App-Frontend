@@ -62,7 +62,7 @@
         </td>
 
         <td *ngIf="checkAdmin">
-          <button class="btn btn-secondary" type="button" (click)="deleteUser(u.id)">Delete</button>
+          <button *ngIf="u.id != userId" class="btn btn-secondary" type="button" (click)="deleteUser(u.id)">Delete</button>
         </td>
         <td *ngIf="checkBranchManager">
           <button *ngIf="u.role != 'Branch Manager'" class="btn btn-secondary" type="button" (click)="deleteUser(u.id)">Delete</button>

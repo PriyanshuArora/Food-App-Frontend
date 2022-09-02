@@ -55,7 +55,7 @@
             <form #food="ngForm" (ngSubmit)="addFood(food)" class="input-group">
                 <div *ngIf="!checkAdmin" class="input-group">
                     <div *ngIf="(addData.submitted || id.invalid && id.touched) && id.errors" style="color: red;" class="input-group">
-                        <div *ngIf="id.errors['required']"><sup>*</sup>Foods is required</div>
+                        <div *ngIf="id.errors['required']  && foodsTemp.length == 0"><sup>*</sup>Foods is required</div>
                     </div>
                     <select
                     class="form-control"
@@ -65,7 +65,7 @@
                     ngModel
                     name="id"
                     #id="ngModel"
-                    [ngClass]="{'border-danger': (addData.submitted && id.errors?.['required'])}"
+                    [ngClass]="{'border-danger': (addData.submitted && id.errors?.['required'] && foodsTemp.length == 0)}"
                     >
                         <option value selected disabled hidden>Select Food</option>
                         <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
@@ -81,7 +81,7 @@
                             ngModel
                             name="quantity"
                             #quantity="ngModel"
-                            [ngClass]="{'border-danger': (addData.submitted && quantity.errors?.['required'])}"
+                            [ngClass]="{'border-danger': (addData.submitted && quantity.errors?.['required'] && foodsTemp.length == 0 )}"
                         />              
                         <button type="submit" class="btn btn-outline-secondary">Add</button>
                     </div>
@@ -89,7 +89,7 @@
 
                 <div *ngIf="checkAdmin" class="input-group">
                     <div *ngIf="(addData.submitted || id.invalid && id.touched) && id.errors" style="color: red;" class="input-group">
-                        <div *ngIf="id.errors['required']"><sup>*</sup>Foods is required</div>
+                        <div *ngIf="id.errors['required'] && foodsTemp.length == 0"><sup>*</sup>Foods is required</div>
                     </div>
                     <select
                     class="form-control"
@@ -99,7 +99,7 @@
                     ngModel
                     name="id"
                     #id="ngModel"
-                    [ngClass]="{'border-danger': (addData.submitted && id.errors?.['required'])}"
+                    [ngClass]="{'border-danger': (addData.submitted && id.errors?.['required'] && foodsTemp.length == 0)}"
                     >
                         <option value selected disabled hidden>Select Food</option>
                         <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
@@ -116,7 +116,7 @@
                             ngModel
                             name="quantity"
                             #quantity="ngModel"
-                            [ngClass]="{'border-danger': (addData.submitted && quantity.errors?.['required'])}"
+                            [ngClass]="{'border-danger': (addData.submitted && quantity.errors?.['required'] && foodsTemp.length == 0)}"
                         />              
                         <button type="submit" class="btn btn-outline-secondary">Add</button>
                     </div>

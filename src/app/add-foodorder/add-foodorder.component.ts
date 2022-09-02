@@ -25,6 +25,7 @@ export class AddFoodorderComponent implements OnInit {
   branch = { id: '' };
   foods:any = [];
   foodsTemp:any = [];
+  tempFoodsList:any = [];
   foodlist: any;
   branchlist:any;
   checkAdmin = this.userService.isAdmin();
@@ -37,7 +38,6 @@ export class AddFoodorderComponent implements OnInit {
     this.branchService.getBranchList().subscribe((data)=>{
       this.branchlist = data;
     })
-    console.log(this.foodlist);
   }
 
   // Method to add foods in order

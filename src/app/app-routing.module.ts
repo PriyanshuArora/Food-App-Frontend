@@ -10,6 +10,7 @@ import { EditFoodComponent } from './edit-food/edit-food.component';
 import { EditFoodorderComponent } from './edit-foodorder/edit-foodorder.component';
 import { EditMenuComponent } from './edit-menu/edit-menu.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { GenerateBillComponent } from './generate-bill/generate-bill.component';
 import { AuthGuardGuard } from './Guards/auth-guard.guard';
 import { HomeComponent } from './home/home.component';
 import { ListBranchComponent } from './list-branch/list-branch.component';
@@ -35,6 +36,8 @@ const routes: Routes = [
   {path:"editfood/:id",component:EditFoodComponent,canActivate:[AuthGuardGuard]},
   {path:"editmenu/:id",component:EditMenuComponent,canActivate:[AuthGuardGuard]},
   {path:"editorder/:id",component:EditFoodorderComponent,canActivate:[AuthGuardGuard]},
+  
+  {path:"bill/:id",component:GenerateBillComponent,canActivate:[AuthGuardGuard]},
 
   {path:"userlist",component:ListUserComponent,canActivate:[AuthGuardGuard]},
   {path:"branchlist",component:ListBranchComponent,canActivate:[AuthGuardGuard]}, 

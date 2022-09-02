@@ -19,6 +19,11 @@ export class FoodorderService {
     return this.http.get("http://localhost:8080/allfoodorder");
   }
 
+  // Getting food order by id from the server using http get method
+  getFoodOrderById(id: any) {
+    return this.http.get(`http://localhost:8080/findfoodorderbyid/${id}`);
+  }
+
   // Deleting food order from the server using http delete method
   deleteFoodOrder(id: any) {
     return this.http.delete(`http://localhost:8080/deletefoodorder/${id}`);
