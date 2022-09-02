@@ -1,5 +1,5 @@
-<div class="container">
-    <h3>Update Food Order</h3>
+<div class="container col-lg-5 col-md-8">
+    <h3 class="heading">Update Food Order</h3>
     <form #addData="ngForm" (ngSubmit)="addData.form.valid && updateFoodOrder(addData)">
         <div class="form-group">
             <label for="name">Name</label>
@@ -8,7 +8,7 @@
             </div>
             <input
                 type="text"
-                class="form-control"
+                class="form-control rounded-pill shadow-sm px-4"
                 placeholder="Enter The Food Name"
                 id="name"
                 required
@@ -28,7 +28,7 @@
             </div>
             <input
                 type="text"
-                class="form-control"
+                class="form-control rounded-pill shadow-sm px-4"
                 placeholder="Enter The Customer Phone Number"
                 id="phone"
                 
@@ -48,7 +48,7 @@
                 <div *ngIf="status.errors['required']"><sup>*</sup>Status is required</div>
             </div>
             <select
-                class="form-control"
+                class="form-control rounded-pill shadow-sm px-4"
                 id="status"
                 required
         
@@ -66,18 +66,18 @@
     
             <label for="listfood">Foods</label>
             <div *ngFor="let u of foodsTemp | orderPipe">                    
-                <div class="input-group">
-                    <p class="form-control btn-outline-secondary disabled" *ngFor="let f of foodlist.t | foodById:u.id">{{ f.category }} | {{ f.name }} ({{ f.type }})</p>
+                <div class="input-group rounded-pill shadow-sm">
+                    <p class="form-control btn-outline-secondary disabled rounded-pill" *ngFor="let f of foodlist.t | foodById:u.id">{{ f.category }} | {{ f.name }} ({{ f.type }}) | {{ f.price }}</p>
                     <div class="input-group-append">
-                        <a class="btn btn-outline-secondary">{{u.quantity}}</a>
-                        <a class="btn btn-outline-secondary" (click)="deleteFood(u)">Delete</a>
+                        <a class="btn btn-outline-secondary disabled rounded-pill shadow-sm">{{u.quantity}}</a>
+                        <a class="btn btn-secondary btn-block rounded-pill shadow-sm" (click)="deleteFood(u)">Delete</a>
                     </div>
                 </div><br>
             </div>
 
             <form #food="ngForm" (ngSubmit)="addFood(food)" class="input-group">
                 <select
-                class="form-control"
+                class="form-control rounded-pill shadow-sm px-4"
                 id="id"
         
                 ngModel
@@ -87,11 +87,13 @@
                 *ngIf="!checkAdmin"
                 >
                     <option value selected disabled hidden>Select Food</option>
-                    <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                    <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>
+                        {{ f.category }} | {{ f.name }} ({{ f.type }}) | {{ f.price }}
+                    </option>
                 </select>
 
                 <select
-                class="form-control btn-outline-secondary"
+                class="form-control rounded-pill shadow-sm px-4"
                 id="id"
         
                 ngModel
@@ -101,22 +103,25 @@
                 *ngIf="checkAdmin"
                 >
                     <option value selected disabled hidden>Select Food</option>
-                    <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                    <option *ngFor="let f of foodlist.t" value={{f.id}}>
+                        {{ f.category }} | {{ f.name }} ({{ f.type }}) | {{ f.price }}
+                    </option>
                 </select>  
 
                 <div class="input-group-append">
                     <input
                         type="number"
-                        class="btn btn-outline-secondary"
+                        class="btn btn-outline-secondary rounded-pill shadow-sm px-4"
                         placeholder="Quantity"
                         id="quantity"
+                        style="width: 168px;"
                         min="1"
 
                         ngModel
                         name="quantity"
                         #quantity="ngModel"
                     />              
-                    <button type="submit" class="btn btn-outline-secondary">Add</button>
+                    <button type="submit" class="btn btn-secondary btn-block rounded-pill shadow-sm">Add</button>
                 </div>
             </form>
 
@@ -126,7 +131,7 @@
                     <div *ngIf="branch.errors['required']"><sup>*</sup>Branch is required</div>
                 </div>
                 <select
-                class="form-control"
+                class="form-control rounded-pill shadow-sm px-4"
                 id="branch"
                 required
 
@@ -141,7 +146,7 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-danger btn-block rounded-pill text-uppercase mb-2 shadow-sm">Submit</button>
     </form>
 </div>
   

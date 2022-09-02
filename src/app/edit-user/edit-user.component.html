@@ -1,6 +1,6 @@
-<div class="container">
-    <h3 *ngIf="checkAdmin">Update User</h3>
-    <h3 *ngIf="checkBranchManager">Update Staff</h3>
+<div class="container col-lg-5 col-md-8">
+    <h3 *ngIf="checkAdmin" class="heading">Update User</h3>
+    <h3 *ngIf="checkBranchManager" class="heading">Update Staff</h3>
     <form #addData="ngForm" (ngSubmit)="addData.form.valid && updateUser(addData)">
       <div class="form-group">
         <label for="name">Name</label>
@@ -10,7 +10,7 @@
         </div>
         <input
           type="text"
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           placeholder="Enter The User Name"
           id="name"
           
@@ -31,7 +31,7 @@
         </div>
         <input
           type="email"
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           placeholder="Enter The User Email"
           id="email"
           required email
@@ -51,7 +51,7 @@
         </div>
         <input
           type="password"
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           placeholder="Enter The User Password"
           id="password"
           
@@ -72,7 +72,7 @@
               <div *ngIf="role.errors['required']"><sup>*</sup>Role is required</div>
             </div>
             <select
-              class="form-control"
+              class="form-control rounded-pill shadow-sm px-4"
               id="role"
               required
       
@@ -93,7 +93,7 @@
               <div *ngIf="branch.errors['required']"><sup>*</sup>Branch is required</div>
             </div>
             <select
-              class="form-control"
+              class="form-control rounded-pill shadow-sm px-4"
               id="branch"
               required
       
@@ -109,7 +109,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-danger btn-block rounded-pill text-uppercase mb-2 shadow-sm">Submit</button>
     </form>
   </div>
   

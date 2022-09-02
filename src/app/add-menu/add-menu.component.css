@@ -11,9 +11,27 @@ img {
 .form-submit select.ng-invalid,
 .form-submit  textarea.ng-invalid
 {
-    border-color: #ff4c6a;
+    border-color: red;
+}
+
+.form-group input.ng-valid.ng-touched,
+.form-group input.ng-valid:focus,
+.form-group select.ng-valid.ng-touched,
+.form-group textarea.ng-valid.ng-touched,
+.form-submit input.ng-valid,
+.form-submit select.ng-valid,
+.form-submit textarea.ng-valid {
+    border-color: green;
 }
 
 .invalid-feedback.form-error {
     display: block;
+}
+
+.heading {
+    padding-top: 40px;
+}
+
+label {
+    padding-top: 15px;
 }

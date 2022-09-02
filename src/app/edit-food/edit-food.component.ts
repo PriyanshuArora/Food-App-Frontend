@@ -67,6 +67,7 @@ export class EditFoodComponent implements OnInit {
     this.foodService.editFood(this.selectedFood.id, form.value).subscribe(
       (res) => {
         console.log(res);
+        window.alert("Food updated successfully!");
         this.router.navigate(['foodlist']);
       },
       (err) => {

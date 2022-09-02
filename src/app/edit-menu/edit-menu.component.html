@@ -1,5 +1,5 @@
-<div class="container">
-    <h3>Update Menu</h3>
+<div class="container col-lg-5 col-md-8">
+    <h3 class="heading">Update Menu</h3>
     <form #addData="ngForm" (ngSubmit)="addData.form.valid && updateMenu(addData)">
         <div class="form-group">
             <label for="name">Name</label>
@@ -8,7 +8,7 @@
             </div>
             <input
             type="text"
-            class="form-control"
+            class="form-control rounded-pill shadow-sm px-4"
             placeholder="Enter The Food Name"
             id="name"
             required
@@ -25,7 +25,7 @@
                 <div *ngIf="category.errors['required']"><sup>*</sup>Category is required</div>
             </div>
             <select
-            class="form-control"
+            class="form-control rounded-pill shadow-sm px-4"
             id="category"
             required
     
@@ -46,14 +46,14 @@
             <label for="listfood">Foods</label>
             <div *ngFor="let u of selectedMenu.foods">                    
                 <div class="input-group">
-                    <p class="form-control btn-outline-secondary" *ngFor="let f of foodlist.t | foodById:u.id">{{ f.category }} | {{ f.name }} ({{ f.type }})</p>
-                    <a class="btn btn-outline-secondary" (click)="deleteFood(u)">Delete</a><br>
+                    <p class="form-control disabled rounded-pill shadow-sm" *ngFor="let f of foodlist.t | foodById:u.id">{{ f.category }} | {{ f.name }} ({{ f.type }})</p>
+                    <a class="btn btn-secondary rounded-pill shadow-sm" (click)="deleteFood(u)">Delete</a><br>
                 </div><br>
             </div>
 
             <form #food="ngForm" (ngSubmit)="addFood(food)" class="input-group">
                 <select
-                class="form-control btn-outline-secondary"
+                class="form-control  rounded-pill shadow-sm px-4"
                 id="id"
         
                 ngModel
@@ -62,12 +62,12 @@
 
                 *ngIf="checkBranchManager"
                 >
-                <option value selected disabled hidden>Select Food</option>
-                <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                    <option value selected disabled hidden>Select Food</option>
+                    <option *ngFor="let f of foodlist.t | filterByBranch" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
                 </select>
 
                 <select
-                class="form-control btn-outline-secondary"
+                class="form-control rounded-pill shadow-sm px-4"
                 id="id"
         
                 ngModel
@@ -76,10 +76,10 @@
 
                 *ngIf="checkAdmin"
                 >
-                <option value selected disabled hidden>Select Food</option>
-                <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
+                    <option value selected disabled hidden>Select Food</option>
+                    <option *ngFor="let f of foodlist.t" value={{f.id}}>{{ f.category }} | {{ f.name }} ({{ f.type }})</option>
                 </select>                
-                <button type="submit" class="btn btn-outline-secondary">Add</button>
+                <button type="submit" class="btn btn-secondary rounded-pill shadow-sm">Add</button>
             </form>
 
             <div *ngIf="checkAdmin">
@@ -88,7 +88,7 @@
                     <div *ngIf="branch.errors['required']"><sup>*</sup>Branch is required</div>
                 </div>
                 <select
-                class="form-control"
+                class="form-control rounded-pill shadow-sm px-4"
                 id="branch"
                 required
 
@@ -103,7 +103,7 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-danger btn-block rounded-pill text-uppercase mb-2 shadow-sm">Submit</button>
     </form>
 </div>
   

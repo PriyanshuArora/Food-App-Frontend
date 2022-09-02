@@ -30,7 +30,7 @@
         <option value="bid">Branch Managers By Id</option>
         <option value="uid">User By Id</option>
       </select>
-      <button type="submit" class="btn btn-outline-secondary">Submit</button>
+      <button type="submit" class="btn btn-secondary">Submit</button>
     </div>
   </form>
 
@@ -42,8 +42,8 @@
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Assigned Branch</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Delete</th>
+        <th scope="col" class="text-center">Edit</th>
+        <th scope="col" class="text-center">Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -55,17 +55,17 @@
         <td *ngIf="u.branch != null">{{ u.branch.id }}</td>
         
         <td *ngIf="checkAdmin">
-          <button class="btn btn-primary" type="button" [routerLink]="['/edituser/',u.id]">Edit</button>
+          <button class="btn btn-primary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/edituser/',u.id]">Edit</button>
         </td>
         <td *ngIf="checkBranchManager">
-          <button *ngIf="u.role != 'Branch Manager'" class="btn btn-primary" type="button" [routerLink]="['/edituser/',u.id]">Edit</button>
+          <button *ngIf="u.role != 'Branch Manager'" class="btn btn-primary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/edituser/',u.id]">Edit</button>
         </td>
 
         <td *ngIf="checkAdmin">
-          <button *ngIf="u.id != userId" class="btn btn-secondary" type="button" (click)="deleteUser(u.id)">Delete</button>
+          <button *ngIf="u.id != userId" class="btn btn-secondary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="deleteUser(u.id)">Delete</button>
         </td>
         <td *ngIf="checkBranchManager">
-          <button *ngIf="u.role != 'Branch Manager'" class="btn btn-secondary" type="button" (click)="deleteUser(u.id)">Delete</button>
+          <button *ngIf="u.role != 'Branch Manager'" class="btn btn-secondary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="deleteUser(u.id)">Delete</button>
         </td>
       </tr>
     </tbody>

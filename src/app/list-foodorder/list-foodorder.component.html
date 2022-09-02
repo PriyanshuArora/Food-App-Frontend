@@ -18,9 +18,9 @@
             </table>
           </th>
           <th scope="col">Price</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Bill</th>
-          <th scope="col">Delete</th>
+          <th scope="col" class="text-center">Edit</th>
+          <th scope="col" class="text-center">Bill</th>
+          <th scope="col" class="text-center">Delete</th>
         </tr>
       </thead>
       <tbody *ngIf="!checkAdmin">
@@ -45,9 +45,9 @@
             </tr>
           </td>
           <td>{{ b.price }}</td>
-          <td><button class="btn btn-primary" type="button" [routerLink]="['/editorder/',b.id]">Edit</button></td>
-          <td><button class="btn btn-success" type="button" [routerLink]="['/bill/',b.id]">Bill</button></td>
-          <td><button class="btn btn-secondary" type="button" (click)="deleteFoodOrder(b.id)">Delete</button></td>
+          <td><button class="btn btn-primary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/editorder/',b.id]">Edit</button></td>
+          <td><button class="btn btn-success btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/bill/',b.id]">Bill</button></td>
+          <td><button class="btn btn-secondary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="deleteFoodOrder(b.id)">Delete</button></td>
         </tr>
       </tbody>
 
@@ -74,9 +74,9 @@
             </tr>
           </td>
           <td>{{ b.price }}</td>
-          <td><button class="btn btn-primary" type="button" [routerLink]="['/editorder/',b.id]">Edit</button></td>
-          <td><button class="btn btn-success" type="button" [routerLink]="['/bill/',b.id]">Bill</button></td>
-          <td><button class="btn btn-secondary" type="button" (click)="deleteFoodOrder(b.id)">Delete</button></td>
+          <td><button class="btn btn-primary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/editorder/',b.id]">Edit</button></td>
+          <td><button class="btn btn-success btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/bill/',b.id]">Bill</button></td>
+          <td><button class="btn btn-secondary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="deleteFoodOrder(b.id)">Delete</button></td>
         </tr>
       </tbody>
     </table>

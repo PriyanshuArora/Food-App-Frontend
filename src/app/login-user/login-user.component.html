@@ -1,43 +1,63 @@
-<div class="container anim-top">
-    <h3>Login User</h3>
-    <form #logData="ngForm" (ngSubmit)="logData.form.valid && logUser(logData)">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <div *ngIf="(logData.submitted || email.invalid && email.touched) && email.errors" style="color: red;">
-          <div *ngIf="email.errors['required']"><sup>*</sup>Email is required</div>
-          <div *ngIf="email.errors['email']"><sup>*</sup>Email is invalid</div>
-        </div>
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Enter Email"
-          id="email"
-          required email
+<div class="container-fluid anim-top">
+  <div class="row no-gutter">
+    <div class="col-md-6 d-none d-md-flex bg-image"></div>
 
-          ngModel
-          name="email"
-          #email="ngModel"
-          [ngClass]="{'border-danger': (logData.submitted && email.errors?.['required'])}"
-        />
-  
-        <label for="password">Password</label>
-        <div *ngIf="(logData.submitted || password.invalid && password.touched) && password.errors" style="color: red;">
-          <div *ngIf="password.errors['required']"><sup>*</sup>Password is required</div>
-        </div>
-        <input
-          type="password"
-          class="form-control"
-          placeholder="Enter New Password"
-          id="password"
-          required
+    <div class="col-md-6 bg-light anim-left">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-7 col-xl-6 mx-auto">
+              <h3 class="display-4">LOGIN</h3>
+              <br />
+              <form #logData="ngForm" (ngSubmit)="logData.form.valid && logUser(logData)">
+                <div class="form-group mb-3">
+                  <div *ngIf="(logData.submitted || (email.invalid && email.touched)) && email.errors" style="color: red">
+                    <div *ngIf="email.errors['required']">
+                      <sup>*</sup>Email is required
+                    </div>
+                    <div *ngIf="email.errors['email']"><sup>*</sup>Email is invalid</div>
+                  </div>
+                  <input
+                    type="email"
+                    class="form-control rounded-pill shadow-sm px-4"
+                    placeholder="Enter Email"
+                    id="email"
+                    required email
+                    
 
-          ngModel
-          name="password"
-          #password="ngModel"
-          [ngClass]="{'border-danger': (logData.submitted && password.errors?.['required'])}"
-        />
+                    ngModel
+                    name="email"
+                    #email="ngModel"
+                    [ngClass]="{'border-danger': (logData.submitted && email.errors?.['required'])}"
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <div *ngIf="(logData.submitted || (password.invalid && password.touched)) && password.errors" style="color: red">
+                    <div *ngIf="password.errors['required']">
+                      <sup>*</sup>Password is required
+                    </div>
+                  </div>
+                  <input
+                    type="password"
+                    class="form-control rounded-pill shadow-sm px-4"
+                    placeholder="Enter Password"
+                    id="password"
+                    required
+
+                    ngModel
+                    name="password"
+                    #password="ngModel"
+                    [ngClass]="{'border-danger': (logData.submitted && password.errors?.['required'])}"
+                  /><br />
+                </div>
+                <button type="submit" class="btn btn-danger btn-block rounded-pill text-uppercase mb-2 shadow-sm">
+                  Login
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-      <button type="submit" class="btn btn-primary anim-left">Login</button>
-    </form>
+    </div>
+  </div>
 </div>
-  

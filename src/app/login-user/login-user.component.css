@@ -1,38 +1,58 @@
-.form-group input.ng-invalid.ng-touched, 
-.form-group input.ng-invalid:focus, 
-.form-group select.ng-invalid.ng-touched, 
+.form-group input.ng-invalid.ng-touched,
+.form-group input.ng-invalid:focus,
+.form-group select.ng-invalid.ng-touched,
 .form-group textarea.ng-invalid.ng-touched,
 .form-submit input.ng-invalid,
 .form-submit select.ng-invalid,
-.form-submit  textarea.ng-invalid
-{
-    border-color: #ff4c6a;
+.form-submit textarea.ng-invalid {
+  border-color: red;
+}
+
+.form-group input.ng-valid.ng-touched,
+.form-group input.ng-valid:focus,
+.form-group select.ng-valid.ng-touched,
+.form-group textarea.ng-valid.ng-touched,
+.form-submit input.ng-valid,
+.form-submit select.ng-valid,
+.form-submit textarea.ng-valid {
+    border-color: green;
 }
 
 .invalid-feedback.form-error {
-    display: block;
+  display: block;
 }
 .anim-left {
-    animation: moveToRight 0.5s ease-in-out;
-    animation-delay: 5ms;
+  animation: moveToRight 0.5s ease-in-out;
+  animation-delay: 5ms;
 }
 .anim-top {
-    animation: moveToBottom 0.5s ease-in-out;
-    animation-delay: 5ms;
+  animation: moveToBottom 0.5s ease-in-out;
+  animation-delay: 5ms;
 }
 @keyframes moveToRight {
-    0% {
-        transform: translateX(-300px);
-    }
-    100% {
-        transform: translateX(0px);
-    }
+  0% {
+    transform: translateX(+300px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
 }
 @keyframes moveToBottom {
-    0% {
-        transform: translateY(-300px);
-    }
-    100% {
-        transform: translateY(0px);
-    }
+  0% {
+    transform: translateY(-900px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.login,
+.image {
+  min-height: 92.5vh;
+}
+.bg-image {
+  background-image: url("../../assets/bghome.jpg");
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
 }

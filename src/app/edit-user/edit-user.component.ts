@@ -67,6 +67,7 @@ export class EditUserComponent implements OnInit {
 
     this.userService.editUser(this.selectedUser.id, form.value).subscribe(
       (res) => {
+        window.alert("User updated successfully!");
         console.log(res);
         this.router.navigate(['userlist']);
       },

@@ -52,6 +52,7 @@ export class EditBranchComponent implements OnInit {
     this.branchService.editBranch(this.selectedBranch.id, form.value).subscribe(
       (res) => {
         console.log(res);
+        window.alert("Branch updated successfully!");
         this.router.navigate(['branchlist']);
       },
       (err) => {

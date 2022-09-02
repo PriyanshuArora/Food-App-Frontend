@@ -8,8 +8,8 @@
           <th scope="col">Category</th>
           <th scope="col" *ngIf="checkAdmin">Branch</th>
           <th scope="col">Foods</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Delete</th>
+          <th scope="col" class="text-center">Edit</th>
+          <th scope="col" class="text-center">Delete</th>
         </tr>
       </thead>
       <tbody *ngIf="!checkAdmin">
@@ -22,8 +22,8 @@
               <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
             </table>
           </td>
-          <td><button class="btn btn-primary" type="button" [routerLink]="['/editmenu/',b.id]">Edit</button></td>
-          <td><button class="btn btn-secondary" type="button" (click)="deleteMenu(b.id)">Delete</button></td>
+          <td><button class="btn btn-primary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/editmenu/',b.id]">Edit</button></td>
+          <td><button class="btn btn-secondary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="deleteMenu(b.id)">Delete</button></td>
         </tr>
       </tbody>
 
@@ -38,8 +38,8 @@
               <tr *ngFor="let f of b.foods">{{ f.id }}, {{ f.name }}</tr>
             </table>
           </td>
-          <td><button class="btn btn-primary" type="button" [routerLink]="['/editmenu/',b.id]">Edit</button></td>
-          <td><button class="btn btn-secondary" type="button" (click)="deleteMenu(b.id)">Delete</button></td>
+          <td><button class="btn btn-primary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/editmenu/',b.id]">Edit</button></td>
+          <td><button class="btn btn-secondary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="deleteMenu(b.id)">Delete</button></td>
         </tr>
       </tbody>
     </table>

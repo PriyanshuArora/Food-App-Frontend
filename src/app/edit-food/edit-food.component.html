@@ -1,5 +1,5 @@
-<div class="container">
-    <h3>Update Food</h3>
+<div class="container col-lg-5 col-md-8">
+    <h3 class="heading">Update Food</h3>
     <form #addData="ngForm" (ngSubmit)="addData.form.valid && updateFood(addData)">
       <div class="form-group">
         <label for="name">Name</label>
@@ -8,7 +8,7 @@
         </div>
         <input
           type="text"
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           placeholder="Enter The Food Name"
           id="name"
           required
@@ -25,7 +25,7 @@
           <div *ngIf="category.errors['required']"><sup>*</sup>Category is required</div>
         </div>
         <select
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           id="category"
           required
   
@@ -48,7 +48,7 @@
           <div *ngIf="type.errors['required']"><sup>*</sup>Type is required</div>
         </div>
         <select
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           id="type"
           required
   
@@ -71,7 +71,7 @@
         </div>
         <input
           type="text"
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           placeholder="Enter The Food Price"
           id="price"
           
@@ -91,7 +91,7 @@
           <div *ngIf="availability.errors['required']"><sup>*</sup>Availability is required</div>
         </div>
         <select
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           id="availability"
           required
   
@@ -112,7 +112,7 @@
         </div>
         <input
           type="text"
-          class="form-control"
+          class="form-control rounded-pill shadow-sm px-4"
           placeholder="Enter The Food Description"
           id="description"
           required
@@ -130,7 +130,7 @@
             <div *ngIf="branch.errors['required']"><sup>*</sup>Branch is required</div>
           </div>
           <select
-            class="form-control"
+            class="form-control rounded-pill shadow-sm px-4"
             id="branch"
             required
 
@@ -145,7 +145,7 @@
           </select>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-danger btn-block rounded-pill text-uppercase mb-2 shadow-sm">Submit</button>
     </form>
 </div>
   

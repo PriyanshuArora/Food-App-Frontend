@@ -11,8 +11,8 @@
           <th scope="col">Availability</th>
           <th scope="col">Description</th>
           <th scope="col" *ngIf="checkAdmin">Branch</th>
-          <th scope="col">Edit</th>
-          <th scope="col">Change Availability</th>
+          <th scope="col" class="text-center">Edit</th>
+          <th scope="col" class="text-center">Change Availability</th>
         </tr>
       </thead>
       <tbody *ngIf="checkAdmin">
@@ -26,10 +26,10 @@
           <td *ngIf=!b.availability>No</td>
           <td>{{ b.description }}</td>
           <td>{{ b.branch.id }}</td>
-          <td><button class="btn btn-primary" type="button" [routerLink]="['/editfood/',b.id]">Edit</button></td>
+          <td><button class="btn btn-primary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/editfood/',b.id]">Edit</button></td>
           <td>
-            <button class="btn btn-danger" type="button" (click)="changeAvailability(b.id)" *ngIf=b.availability>No</button>
-            <button class="btn btn-success" type="button" (click)="changeAvailability(b.id)" *ngIf=!b.availability>Yes</button>
+            <button class="btn btn-danger btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="changeAvailability(b.id)" *ngIf=b.availability>No</button>
+            <button class="btn btn-success btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="changeAvailability(b.id)" *ngIf=!b.availability>Yes</button>
           </td>
         </tr>
       </tbody>
@@ -43,10 +43,10 @@
           <td *ngIf=b.availability>Yes</td>
           <td *ngIf=!b.availability>No</td>
           <td>{{ b.description }}</td>
-          <td><button class="btn btn-primary" type="button" [routerLink]="['/editfood/',b.id]">Edit</button></td>
+          <td><button class="btn btn-primary btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" [routerLink]="['/editfood/',b.id]">Edit</button></td>
           <td>
-            <button class="btn btn-danger" type="button" (click)="changeAvailability(b.id)" *ngIf=b.availability>No</button>
-            <button class="btn btn-success" type="button" (click)="changeAvailability(b.id)" *ngIf=!b.availability>Yes</button>
+            <button class="btn btn-danger btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="changeAvailability(b.id)" *ngIf=b.availability>No</button>
+            <button class="btn btn-success btn-block rounded-pill text-uppercase mb-2 shadow-sm" type="button" (click)="changeAvailability(b.id)" *ngIf=!b.availability>Yes</button>
           </td>
         </tr>
       </tbody>
