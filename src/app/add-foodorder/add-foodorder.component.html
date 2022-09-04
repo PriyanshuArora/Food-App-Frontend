@@ -42,7 +42,7 @@
             />
     
             <label for="listfood">Foods</label>
-            <div *ngFor="let u of foodsTemp">                    
+            <!-- <div *ngFor="let u of foodsTemp">                    
                 <div class="input-group rounded-pill shadow-sm">
                     <p class="form-control btn-outline-secondary disabled rounded-pill" *ngFor="let f of foodlist.t | foodById:u.id">
                         {{ f.category }} | {{ f.name }} ({{ f.type }}) | {{ f.price }}
@@ -52,6 +52,49 @@
                         <a class="btn btn-secondary btn-block rounded-pill shadow-sm" (click)="deleteFood(u)">Delete</a>
                     </div>
                 </div><br>
+            </div> -->
+
+            <div *ngFor="let u of foodsTemp"> 
+                <form #food="ngForm" (ngSubmit)="updateFood(u.id,food.value.quantity)" class="input-group">
+                    <select
+                    class="form-control rounded-pill shadow-sm"
+                    id="id"
+                    required
+                    disabled 
+            
+                    ngModel
+                    name="id"
+                    #id="ngModel"
+                    [(ngModel)]="u.id"
+                    [ngClass]="{'border-danger': (addData.submitted && id.errors?.['required'] && foodsTemp.length == 0)}"
+                    >
+                        <option *ngFor="let f of foodlist.t | foodById:u.id" value={{f.id}}>
+                            {{ f.category }} | {{ f.name }} ({{ f.type }}) | {{ f.price }}
+                        </option>
+                    </select>
+
+                    <div class="input-group-append">
+                        <div *ngIf="(addData.submitted || quantity.invalid && quantity.touched) && quantity.errors" style="color: red;" class="input-group">
+                            <div *ngIf="quantity.errors['required']  && foodsTemp.length == 0"><sup>*</sup>Quantity is required</div>
+                        </div>
+                        <input
+                            type="number"
+                            class="btn btn-outline-secondary rounded-pill shadow-sm px-4"
+                            placeholder="Quantity"
+                            id="quantity"
+                            style="width: 120px;"
+                            required
+        
+                            ngModel
+                            name="quantity"
+                            #quantity="ngModel"
+                            [(ngModel)]="u.quantity"
+                            [ngClass]="{'border-danger': (addData.submitted && quantity.errors?.['required'] && foodsTemp.length == 0 )}"
+                        />
+                        <a class="btn btn-secondary rounded-pill shadow-sm" (click)="deleteFood(u)">Delete</a>
+                        <button type="submit" class="btn btn-secondary rounded-pill shadow-sm">Update</button>
+                    </div>
+                </form><br>
             </div>
 
             <form #food="ngForm" (ngSubmit)="addFood(food)" class="input-group">

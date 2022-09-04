@@ -20,91 +20,101 @@
           [ngClass]="{'border-danger': (addData.submitted && name.errors?.['required'])}"
         />
   
-        <label for="category">Category</label>
-        <div *ngIf="(addData.submitted || category.invalid && category.touched) && category.errors" style="color: red;">
-          <div *ngIf="category.errors['required']"><sup>*</sup>Category is required</div>
+        <div class="row">
+          <div class="col-6">
+            <label for="category">Category</label>
+            <div *ngIf="(addData.submitted || category.invalid && category.touched) && category.errors" style="color: red;">
+              <div *ngIf="category.errors['required']"><sup>*</sup>Category is required</div>
+            </div>
+            <select
+              class="form-control rounded-pill shadow-sm px-4"
+              id="category"
+              required
+      
+              ngModel
+              name="category"
+              #category="ngModel"
+              [(ngModel)]="selectedFood.category"
+              [ngClass]="{'border-danger': (addData.submitted && category.errors?.['required'])}"
+            >
+              <option disabled selected value>Select Food Category</option>
+              <option>Burger</option>
+              <option>Pizza</option>
+              <option>Fries</option>
+              <option>Cake</option>
+              <option>Soft-Drink</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <label for="type">Type</label>
+            <div *ngIf="(addData.submitted || type.invalid && type.touched) && type.errors" style="color: red;">
+              <div *ngIf="type.errors['required']"><sup>*</sup>Type is required</div>
+            </div>
+            <select
+              class="form-control rounded-pill shadow-sm px-4"
+              id="type"
+              required
+      
+              ngModel
+              name="type"
+              #type="ngModel"
+              [(ngModel)]="selectedFood.type"
+              [ngClass]="{'border-danger': (addData.submitted && type.errors?.['required'])}"
+            >
+              <option disabled selected value>Select Food Type</option>
+              <option>Veg</option>
+              <option>Non-Veg</option>
+            </select>
+          </div>
         </div>
-        <select
-          class="form-control rounded-pill shadow-sm px-4"
-          id="category"
-          required
-  
-          ngModel
-          name="category"
-          #category="ngModel"
-          [(ngModel)]="selectedFood.category"
-          [ngClass]="{'border-danger': (addData.submitted && category.errors?.['required'])}"
-        >
-          <option disabled selected value>Select Food Category</option>
-          <option>Burger</option>
-          <option>Pizza</option>
-          <option>Fries</option>
-          <option>Cake</option>
-          <option>Soft-Drink</option>
-        </select>
-  
-        <label for="type">Type</label>
-        <div *ngIf="(addData.submitted || type.invalid && type.touched) && type.errors" style="color: red;">
-          <div *ngIf="type.errors['required']"><sup>*</sup>Type is required</div>
+      
+        <div class="row">
+          <div class="col-6">
+            <label for="price">Price</label>
+            <div *ngIf="(addData.submitted || price.invalid && price.touched) && price.errors" style="color: red;">
+              <div *ngIf="price.errors['required']"><sup>*</sup>Price is required</div>
+              <div *ngIf="price.errors['pattern']"><sup>*</sup>Price is invalid</div>
+              <div *ngIf="price.errors['minlength']"><sup>*</sup>Price must be at least 2 characters</div>
+            </div>
+            <input
+              type="text"
+              class="form-control rounded-pill shadow-sm px-4"
+              placeholder="Enter The Food Price"
+              id="price"
+              
+              required
+              pattern="^\d+(,\d{1,2})?$"
+              minlength="2"
+      
+              ngModel
+              name="price"
+              #price="ngModel"
+              [(ngModel)]="selectedFood.price"
+              [ngClass]="{'border-danger': (addData.submitted && price.errors?.['required'])}"
+            />
+          </div>
+          <div class="col-6">
+            <label for="availability">Availability</label>
+            <div *ngIf="(addData.submitted || availability.invalid && availability.touched) && availability.errors" style="color: red;">
+              <div *ngIf="availability.errors['required']"><sup>*</sup>Availability is required</div>
+            </div>
+            <select
+              class="form-control rounded-pill shadow-sm px-4"
+              id="availability"
+              required
+      
+              ngModel
+              name="availability"
+              #availability="ngModel"
+              [(ngModel)]="selectedFood.availability"
+              [ngClass]="{'border-danger': (addData.submitted && availability.errors?.['required'])}"
+            >
+              <option disabled selected value>Select Food Availability</option>
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
         </div>
-        <select
-          class="form-control rounded-pill shadow-sm px-4"
-          id="type"
-          required
-  
-          ngModel
-          name="type"
-          #type="ngModel"
-          [(ngModel)]="selectedFood.type"
-          [ngClass]="{'border-danger': (addData.submitted && type.errors?.['required'])}"
-        >
-          <option disabled selected value>Select Food Type</option>
-          <option>Veg</option>
-          <option>Non-Veg</option>
-        </select>
-  
-        <label for="price">Price</label>
-        <div *ngIf="(addData.submitted || price.invalid && price.touched) && price.errors" style="color: red;">
-          <div *ngIf="price.errors['required']"><sup>*</sup>Price is required</div>
-          <div *ngIf="price.errors['pattern']"><sup>*</sup>Price is invalid</div>
-          <div *ngIf="price.errors['minlength']"><sup>*</sup>Price must be at least 2 characters</div>
-        </div>
-        <input
-          type="text"
-          class="form-control rounded-pill shadow-sm px-4"
-          placeholder="Enter The Food Price"
-          id="price"
-          
-          required
-          pattern="^\d+(,\d{1,2})?$"
-          minlength="2"
-  
-          ngModel
-          name="price"
-          #price="ngModel"
-          [(ngModel)]="selectedFood.price"
-          [ngClass]="{'border-danger': (addData.submitted && price.errors?.['required'])}"
-        />
-
-        <label for="availability">Availability</label>
-        <div *ngIf="(addData.submitted || availability.invalid && availability.touched) && availability.errors" style="color: red;">
-          <div *ngIf="availability.errors['required']"><sup>*</sup>Availability is required</div>
-        </div>
-        <select
-          class="form-control rounded-pill shadow-sm px-4"
-          id="availability"
-          required
-  
-          ngModel
-          name="availability"
-          #availability="ngModel"
-          [(ngModel)]="selectedFood.availability"
-          [ngClass]="{'border-danger': (addData.submitted && availability.errors?.['required'])}"
-        >
-          <option disabled selected value>Select Food Availability</option>
-          <option value="true">Yes</option>
-          <option value="false">No</option>
-        </select>
 
         <label for="description">Description</label>
         <div *ngIf="(addData.submitted || description.invalid && description.touched) && description.errors" style="color: red;">

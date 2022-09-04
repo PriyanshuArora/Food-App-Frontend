@@ -62,6 +62,29 @@ export class AddFoodorderComponent implements OnInit {
     }
   }
 
+  // Method to update foods in order
+  updateFood(id:any, newQuantity:any) {
+    let countOfFood = 0;
+    this.foods.forEach((x: { id: any; }) => {
+      if (id == x.id)
+      {
+        countOfFood++;
+      }
+    });
+    if(countOfFood > newQuantity) {
+      let quantityDif = countOfFood - newQuantity;
+      for(let i = 0; i < quantityDif; i++) {        
+        this.foods.splice(this.foods.findIndex((obj: { id: any; }) => obj.id == id), 1);
+      }
+    }
+    else if(countOfFood < newQuantity) {
+      let quantityDif = newQuantity -countOfFood;
+      for(let i = 0; i < quantityDif; i++) {        
+        this.foods.push({"id" : id});
+      }
+    }
+  }
+
   // Method to delete foods from order
   deleteFood(item:any) {
     this.foodsTemp.splice(this.foodsTemp.indexOf(item), 1);
