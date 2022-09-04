@@ -1,7 +1,12 @@
 <div class="container">
-  <h3 *ngIf="checkAdmin">User Details</h3>
-  <h3 *ngIf="checkBranchManager">Staff Details</h3>
+  <h3 *ngIf="checkAdmin" class="heading">User Details</h3>
+  <!-- <h3 *ngIf="checkBranchManager" class="heading">Staff Details</h3> -->
+  <div class="row heading" *ngIf="checkBranchManager">
+    <h3 class="col-md-12 col-lg-8">Staff Details</h3>
+    <input type="text" class="form-control rounded-pill shadow-sm col-md-12 col-lg-4" placeholder="Enter id of staff to search..." [(ngModel)]="staffId" />
+  </div>
 
+  <br>
   <form #addData="ngForm" (ngSubmit)="getUser(addData)" class="input-group" *ngIf="checkAdmin">
     <input
       type="text"
@@ -47,7 +52,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let u of list.t | userList: value:option">
+      <tr *ngFor="let u of list.t | userList: value:option | findById:staffId">
         <th>{{ u.id }}</th>
         <td>{{ u.name }}</td>
         <td>{{ u.email }}</td>

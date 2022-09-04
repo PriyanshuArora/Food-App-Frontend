@@ -15,6 +15,7 @@ export class ListFoodorderComponent implements OnInit {
 
   // local variables
   orderList: any;
+  orderId: any;
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
 

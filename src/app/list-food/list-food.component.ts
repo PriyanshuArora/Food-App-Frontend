@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FoodService } from '../Services/food.service';
 import { UserService } from '../Services/user.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-list-food',
@@ -17,6 +18,7 @@ export class ListFoodComponent implements OnInit {
 
   // local variables
   foodList: any;
+  foodId: any;
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
   userRole = this.userService.getRole();
@@ -30,7 +32,7 @@ export class ListFoodComponent implements OnInit {
       this.router.navigate(['']);
     }
   }
-
+  
   // method to change availability of food
   changeAvailability(id: any) {
     this.foodService.changeAvailability(id).subscribe(

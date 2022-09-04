@@ -17,6 +17,7 @@ export class ListBranchComponent implements OnInit {
 
   // local variables
   branchList: any;
+  branchId: any;
   userRole = this.userService.getRole();
 
   ngOnInit(): void {

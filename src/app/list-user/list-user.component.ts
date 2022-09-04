@@ -19,6 +19,7 @@ export class ListUserComponent implements OnInit {
   list: any = { t: [] };
   value: any;
   option: any;
+  staffId: any;
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
   userRole = this.userService.getRole();

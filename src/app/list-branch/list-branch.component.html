@@ -1,5 +1,10 @@
 <div class="container">
-  <h3>Branch Details</h3>
+  <div class="row heading">
+    <h3 class="col-md-12 col-lg-8">Branch Details</h3>
+    <input type="text" class="form-control rounded-pill shadow-sm col-md-12 col-lg-4" placeholder="Enter id of branch to search..." [(ngModel)]="branchId" />
+  </div>
+  <br>
+
   <table class="table">
     <thead>
       <tr class="table-active">
@@ -13,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let b of branchList.t">
+      <tr *ngFor="let b of branchList.t | findById:branchId">
         <th>{{ b.id }}</th>
         <td>{{ b.name }}</td>
         <td>{{ b.city }}</td>

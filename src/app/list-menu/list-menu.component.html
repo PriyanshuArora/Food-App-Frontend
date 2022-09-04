@@ -1,5 +1,9 @@
 <div class="container">
-    <h3>Menu Details</h3>
+    <div class="row heading">
+      <h3 class="col-md-12 col-lg-8">Menu Details</h3>
+      <input type="text" class="form-control rounded-pill shadow-sm col-md-12 col-lg-4" placeholder="Enter id of menu to search..." [(ngModel)]="menuId" />
+    </div>
+    <br>
     <table class="table">
       <thead>
         <tr class="table-active">
@@ -13,7 +17,7 @@
         </tr>
       </thead>
       <tbody *ngIf="!checkAdmin">
-        <tr *ngFor="let b of menuList.t | filterByBranch">
+        <tr *ngFor="let b of menuList.t | filterByBranch | findById:menuId">
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.category }}</td>
@@ -28,7 +32,7 @@
       </tbody>
 
       <tbody *ngIf="checkAdmin">
-        <tr *ngFor="let b of menuList.t">
+        <tr *ngFor="let b of menuList.t | findById:menuId">
           <th>{{ b.id }}</th>
           <td>{{ b.name }}</td>
           <td>{{ b.category }}</td>

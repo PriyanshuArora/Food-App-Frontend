@@ -17,6 +17,7 @@ export class ListMenuComponent implements OnInit {
 
   // local variables
   menuList: any;
+  menuId: any;
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
   userRole = this.userService.getRole();

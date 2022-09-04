@@ -28,6 +28,7 @@ import { ListMenuShowcaseComponent } from './list-menu-showcase/list-menu-showca
 import { HomeComponent } from './home/home.component';
 import { OrderPipePipe } from './Pipes/order-pipe.pipe';
 import { GenerateBillComponent } from './generate-bill/generate-bill.component';
+import { FindByIdPipe } from './Pipes/find-by-id.pipe';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { GenerateBillComponent } from './generate-bill/generate-bill.component';
     ListMenuShowcaseComponent,
     HomeComponent,
     OrderPipePipe,
-    GenerateBillComponent
+    GenerateBillComponent,
+    FindByIdPipe
   ],
   imports: [
     BrowserModule,
