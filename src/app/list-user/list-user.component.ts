@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../Services/user.service';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-user',
   templateUrl: './list-user.component.html',
   styleUrls: ['./list-user.component.css'],
 })
-export class ListUserComponent implements OnInit {
+export class ListUserComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService, 
     private router: Router
@@ -25,13 +26,14 @@ export class ListUserComponent implements OnInit {
   userRole = this.userService.getRole();
   userId = this.userService.getId();
   branchId = this.userService.getBranch();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userRole == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
-    this.userService.getUserList().subscribe((data) => {
+    this.Subscription = this.userService.getUserList().subscribe((data) => {
       this.tempList = data;
       if (this.userRole == 'Branch Manager') {
         for (let u of this.tempList.t) {
@@ -61,7 +63,7 @@ export class ListUserComponent implements OnInit {
 
   // method to delete user
   deleteUser(id: any) {
-    this.userService.deleteUser(id).subscribe(
+    this.Subscription = this.userService.deleteUser(id).subscribe(
       (res) => {
         // this.user.getUserList().subscribe((res)=>{
         //     this.list = res;
@@ -74,5 +76,9 @@ export class ListUserComponent implements OnInit {
         window.alert(err.message);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

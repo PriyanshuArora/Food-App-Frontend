@@ -1,3 +1,6 @@
 .dropdown-item:active {
     background-color: #dc3545;
 }
+.border-3 {
+    border-width:3px !important;
+}

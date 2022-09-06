@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BranchService } from '../Services/branch.service';
 import { FoodService } from '../Services/food.service';
 import { MenuService } from '../Services/menu.service';
@@ -11,7 +12,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './edit-menu.component.html',
   styleUrls: ['./edit-menu.component.css']
 })
-export class EditMenuComponent implements OnInit {
+export class EditMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
@@ -32,21 +33,22 @@ export class EditMenuComponent implements OnInit {
   checkAdmin = this.userService.isAdmin();
   userRole = this.userService.getRole();
   branchId = this.userService.getBranch();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userRole == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
-    this.foodService.getFoodList().subscribe((data)=>{
+    this.Subscription = this.foodService.getFoodList().subscribe((data)=>{
       this.foodlist = data;
     })
-    this.branchService.getBranchList().subscribe((data)=>{
+    this.Subscription = this.branchService.getBranchList().subscribe((data)=>{
       this.branchlist = data;
     })
 
     let id=this.route.snapshot.params['id'];
-    this.menuService.getMenuList().subscribe((data)=>{
+    this.Subscription = this.menuService.getMenuList().subscribe((data)=>{
       this.menuList = data;
       for(let r of this.menuList.t) {
         if(r.id == id) {
@@ -89,13 +91,16 @@ export class EditMenuComponent implements OnInit {
       form.value.branch = this.branch;
     }
 
-    this.menuService.editMenu(this.selectedMenu.id,form.value).subscribe((res)=>{
-      console.log(res);
+    this.Subscription = this.menuService.editMenu(this.selectedMenu.id,form.value).subscribe((res)=>{
       window.alert("Menu updated successfully!");
       this.router.navigate(['menulist']);
     },(err)=>{
       console.log(err);
       window.alert(err.error.message);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

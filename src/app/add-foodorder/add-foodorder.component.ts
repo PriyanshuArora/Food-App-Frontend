@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BranchService } from '../Services/branch.service';
 import { FoodService } from '../Services/food.service';
 import { FoodorderService } from '../Services/foodorder.service';
@@ -11,7 +12,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './add-foodorder.component.html',
   styleUrls: ['./add-foodorder.component.css']
 })
-export class AddFoodorderComponent implements OnInit {
+export class AddFoodorderComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
@@ -30,12 +31,13 @@ export class AddFoodorderComponent implements OnInit {
   branchlist:any;
   checkAdmin = this.userService.isAdmin();
   userRole = this.userService.getRole();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
-    this.foodService.getFoodList().subscribe((data)=>{
+    this.Subscription = this.foodService.getFoodList().subscribe((data)=>{
       this.foodlist = data;
     })
-    this.branchService.getBranchList().subscribe((data)=>{
+    this.Subscription = this.branchService.getBranchList().subscribe((data)=>{
       this.branchlist = data;
     })
   }
@@ -106,7 +108,7 @@ export class AddFoodorderComponent implements OnInit {
       form.value.branch = this.branch;
     }
 
-    this.orderService.addFoodOrder(form.value).subscribe(
+    this.Subscription = this.orderService.addFoodOrder(form.value).subscribe(
       (res) => {
         this.reloadComponent();
         window.alert("Food order added successfully!");
@@ -125,4 +127,7 @@ export class AddFoodorderComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
+  }
 }

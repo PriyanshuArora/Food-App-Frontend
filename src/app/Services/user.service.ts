@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +66,8 @@ export class UserService {
     localStorage.removeItem('userrole');
     localStorage.removeItem('username');
     localStorage.removeItem('userbranch');
-    return this.router.navigate(['']);
+    // return this.router.navigate(['']);
+    return of({logout : true});
   }
 
   // Getting id from local storage.

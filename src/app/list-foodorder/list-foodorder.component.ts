@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FoodorderService } from '../Services/foodorder.service';
 import { UserService } from '../Services/user.service';
 
@@ -7,7 +8,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './list-foodorder.component.html',
   styleUrls: ['./list-foodorder.component.css'],
 })
-export class ListFoodorderComponent implements OnInit {
+export class ListFoodorderComponent implements OnInit, OnDestroy {
   constructor(
     private orderService: FoodorderService,
     private userService: UserService
@@ -18,16 +19,17 @@ export class ListFoodorderComponent implements OnInit {
   orderId: any;
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
-    this.orderService.getFoodOrderList().subscribe((data) => {
+    this.Subscription = this.orderService.getFoodOrderList().subscribe((data) => {
       this.orderList = data;
     });
   }
 
   // method to delete food orders
   deleteFoodOrder(id: any) {
-    this.orderService.deleteFoodOrder(id).subscribe(
+    this.Subscription = this.orderService.deleteFoodOrder(id).subscribe(
       (res) => {
         window.alert('Food Order deleted successfully!');
         this.ngOnInit();
@@ -37,5 +39,9 @@ export class ListFoodorderComponent implements OnInit {
         window.alert(err.message);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

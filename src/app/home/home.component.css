@@ -30,11 +30,15 @@ footer {
 }
 .bg-home {
     width: 100%; 
-    max-height: 85vh;
+    max-height: 84.7vh;
     height: auto;
     position: absolute;
     /* z-index:-5; */
     object-fit: contain;
+}
+
+.border-3 {
+    border-width:3px !important;
 }
 
 .fade {

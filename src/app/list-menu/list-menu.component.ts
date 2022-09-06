@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MenuService } from '../Services/menu.service';
 import { UserService } from '../Services/user.service';
 
@@ -8,7 +9,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './list-menu.component.html',
   styleUrls: ['./list-menu.component.css'],
 })
-export class ListMenuComponent implements OnInit {
+export class ListMenuComponent implements OnInit, OnDestroy {
   constructor(
     private menuService: MenuService,
     private userService: UserService,
@@ -21,9 +22,10 @@ export class ListMenuComponent implements OnInit {
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
   userRole = this.userService.getRole();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
-    this.menuService.getMenuList().subscribe((data) => {
+    this.Subscription = this.menuService.getMenuList().subscribe((data) => {
       this.menuList = data;
     });
     if (this.userRole == 'Staff') {
@@ -33,7 +35,7 @@ export class ListMenuComponent implements OnInit {
   }
 
   deleteMenu(id: any) {
-    this.menuService.deleteMenu(id).subscribe(
+    this.Subscription = this.menuService.deleteMenu(id).subscribe(
       (res) => {
         window.alert('Menu deleted successfully!');
         this.ngOnInit();
@@ -43,5 +45,9 @@ export class ListMenuComponent implements OnInit {
         window.alert(err.message);
       }
     );
+  }
+  
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

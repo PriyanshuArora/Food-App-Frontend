@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserService } from '../Services/user.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './login-user.component.html',
   styleUrls: ['./login-user.component.css'],
 })
-export class LoginUserComponent implements OnInit {
+export class LoginUserComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService, 
     private router: Router
@@ -16,6 +17,7 @@ export class LoginUserComponent implements OnInit {
 
   // local variable
   data: any;
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userService.isLoggedIn()) {
@@ -25,12 +27,10 @@ export class LoginUserComponent implements OnInit {
 
   // method to login user
   logUser(form: NgForm) {
-    this.userService.logUser(form.value.email, form.value.password).subscribe(
+    this.Subscription = this.userService.logUser(form.value.email, form.value.password).subscribe(
       (res) => {
         this.data = res;
-        // console.log(res);
         if (this.data.status === 200) {
-          console.log(this.data.t);
           localStorage.setItem('userid', this.data.t.id);
           localStorage.setItem('userrole', this.data.t.role);
           localStorage.setItem('username', this.data.t.name);
@@ -47,5 +47,9 @@ export class LoginUserComponent implements OnInit {
         window.alert(err.error.message);
       }
     );
+  }
+  
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

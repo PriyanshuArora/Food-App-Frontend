@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FoodService } from '../Services/food.service';
 import { UserService } from '../Services/user.service';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-food',
   templateUrl: './list-food.component.html',
   styleUrls: ['./list-food.component.css'],
 })
-export class ListFoodComponent implements OnInit {
+export class ListFoodComponent implements OnInit, OnDestroy {
   constructor(
     private foodService: FoodService,
     private userService: UserService,
@@ -22,9 +23,10 @@ export class ListFoodComponent implements OnInit {
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
   userRole = this.userService.getRole();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
-    this.foodService.getFoodList().subscribe((data) => {
+    this.Subscription = this.foodService.getFoodList().subscribe((data) => {
       this.foodList = data;
     });
     if (this.userRole == 'Staff') {
@@ -35,7 +37,7 @@ export class ListFoodComponent implements OnInit {
   
   // method to change availability of food
   changeAvailability(id: any) {
-    this.foodService.changeAvailability(id).subscribe(
+    this.Subscription = this.foodService.changeAvailability(id).subscribe(
       (res) => {
         window.alert('Food availability changed successfully!');
         this.ngOnInit();
@@ -45,5 +47,9 @@ export class ListFoodComponent implements OnInit {
         window.alert(err.message);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

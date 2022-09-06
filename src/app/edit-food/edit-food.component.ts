@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BranchService } from '../Services/branch.service';
 import { FoodService } from '../Services/food.service';
 import { UserService } from '../Services/user.service';
@@ -10,7 +11,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './edit-food.component.html',
   styleUrls: ['./edit-food.component.css'],
 })
-export class EditFoodComponent implements OnInit {
+export class EditFoodComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -27,6 +28,7 @@ export class EditFoodComponent implements OnInit {
   checkAdmin = this.userService.isAdmin();
   userRole = this.userService.getRole();
   branchId = this.userService.getBranch();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userRole == 'Staff') {
@@ -35,7 +37,7 @@ export class EditFoodComponent implements OnInit {
     }
 
     let id = this.route.snapshot.params['id'];
-    this.foodService.getFoodList().subscribe(
+    this.Subscription = this.foodService.getFoodList().subscribe(
       (data) => {
         this.foodList = data;
         for (let r of this.foodList.t) {
@@ -49,7 +51,7 @@ export class EditFoodComponent implements OnInit {
         window.alert(err.error.message);
       }
     );
-    this.branchService.getBranchList().subscribe((data) => {
+    this.Subscription = this.branchService.getBranchList().subscribe((data) => {
       this.branchlist = data;
     });
   }
@@ -64,9 +66,8 @@ export class EditFoodComponent implements OnInit {
       form.value.branch = this.branch;
     }
 
-    this.foodService.editFood(this.selectedFood.id, form.value).subscribe(
+    this.Subscription = this.foodService.editFood(this.selectedFood.id, form.value).subscribe(
       (res) => {
-        console.log(res);
         window.alert("Food updated successfully!");
         this.router.navigate(['foodlist']);
       },
@@ -75,5 +76,9 @@ export class EditFoodComponent implements OnInit {
         window.alert(err.error.message);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

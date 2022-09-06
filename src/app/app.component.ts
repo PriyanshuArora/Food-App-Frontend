@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { UserService } from './Services/user.service';
 
 @Component({
@@ -6,10 +8,14 @@ import { UserService } from './Services/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy{
   title = 'Food-App';
+  Subscription: Subscription | undefined;
 
-  constructor(private service:UserService) {}
+  constructor(
+    private service:UserService,
+    private router:Router
+  ) {}
 
   getUserName() {
     return this.service.getName();
@@ -32,6 +38,12 @@ export class AppComponent {
   }
 
   logOut() {
-    this.service.logOut();
+    this.Subscription = this.service.logOut().subscribe(val=>{
+      this.router.navigate(['']);
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

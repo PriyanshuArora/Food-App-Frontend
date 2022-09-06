@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BranchService } from '../Services/branch.service';
 import { UserService } from '../Services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-branch',
   templateUrl: './edit-branch.component.html',
   styleUrls: ['./edit-branch.component.css'],
 })
-export class EditBranchComponent implements OnInit {
+export class EditBranchComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
@@ -22,6 +23,7 @@ export class EditBranchComponent implements OnInit {
   branchList: any;
   selectedBranch: any;
   userRole = this.userService.getRole();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userRole != 'Admin') {
@@ -30,7 +32,7 @@ export class EditBranchComponent implements OnInit {
     }
 
     let id = this.route.snapshot.params['id'];
-    this.branchService.getBranchList().subscribe(
+    this.Subscription = this.branchService.getBranchList().subscribe(
       (data) => {
         this.branchList = data;
         for (let r of this.branchList.t) {
@@ -48,10 +50,8 @@ export class EditBranchComponent implements OnInit {
 
   // Method to update branch
   updateBranch(form: NgForm) {
-    console.log(form.value);
-    this.branchService.editBranch(this.selectedBranch.id, form.value).subscribe(
+    this.Subscription = this.branchService.editBranch(this.selectedBranch.id, form.value).subscribe(
       (res) => {
-        console.log(res);
         window.alert("Branch updated successfully!");
         this.router.navigate(['branchlist']);
       },
@@ -60,5 +60,9 @@ export class EditBranchComponent implements OnInit {
         window.alert(err.error.message);
       }
     );
+  }
+  
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

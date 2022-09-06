@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BranchService } from '../Services/branch.service';
 import { FoodService } from '../Services/food.service';
 import { MenuService } from '../Services/menu.service';
@@ -11,7 +12,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './add-menu.component.html',
   styleUrls: ['./add-menu.component.css']
 })
-export class AddMenuComponent implements OnInit {
+export class AddMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
@@ -29,16 +30,17 @@ export class AddMenuComponent implements OnInit {
   checkBranchManager = this.userService.isBranchManager();
   checkAdmin = this.userService.isAdmin();
   userRole = this.userService.getRole();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userRole == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
-    this.foodService.getFoodList().subscribe((data)=>{
+    this.Subscription = this.foodService.getFoodList().subscribe((data)=>{
       this.foodlist = data;
     })
-    this.branchService.getBranchList().subscribe((data)=>{
+    this.Subscription = this.branchService.getBranchList().subscribe((data)=>{
       this.branchlist = data;
     })
   }
@@ -73,7 +75,7 @@ export class AddMenuComponent implements OnInit {
       form.value.branch = this.branch;
     }
 
-    this.menu.addMenu(form.value).subscribe(
+    this.Subscription = this.menu.addMenu(form.value).subscribe(
       (res) => {
         this.reloadComponent();
         window.alert("Menu added successfully!");
@@ -92,4 +94,7 @@ export class AddMenuComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
+  }
 }

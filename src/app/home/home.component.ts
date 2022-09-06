@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { BranchService } from '../Services/branch.service';
 import { FoodService } from '../Services/food.service';
 import { FoodorderService } from '../Services/foodorder.service';
@@ -11,11 +11,11 @@ import { UserService } from '../Services/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private menuService:MenuService, 
-    private userService:UserService, 
+    public userService:UserService, 
     private branchService:BranchService,
     private foodService:FoodService,
     private orderService:FoodorderService
@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
 
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
-  username = this.userService.getName();
   branchId = this.userService.getBranch();
+  Subscription: Subscription | undefined;
 
   userList:any;
   foodList:any;
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.menuService.getMenuList().subscribe((data)=>{
+    this.Subscription = this.menuService.getMenuList().subscribe((data)=>{
       this.menuList = data;
       for(let m of this.menuList.t) {
         if(m.branch != null) {
@@ -50,8 +50,8 @@ export class HomeComponent implements OnInit {
         }
       }
     })
-    
-    this.userService.getUserList().subscribe((data)=>{
+
+    this.Subscription = this.userService.getUserList().subscribe((data)=>{
       this.userList = data;
       for(let u of this.userList.t) {
         if(u.branch != null) {
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       }
     })
 
-    this.foodService.getFoodList().subscribe((data)=>{
+    this.Subscription = this.foodService.getFoodList().subscribe((data)=>{
       this.foodList = data;
       for(let f of this.foodList.t) {
         if(f.branch != null) {
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
       }
     })
 
-    this.orderService.getFoodOrderList().subscribe((data)=>{
+    this.Subscription = this.orderService.getFoodOrderList().subscribe((data)=>{
       this.orderList = data;
       for(let o of this.orderList.t) {
         if(o.branch != null) {
@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
       }
     })
 
-    this.branchService.getBranchList().subscribe((data)=>{
+    this.Subscription = this.branchService.getBranchList().subscribe((data)=>{
       this.branchList = data;
       for(let b of this.branchList.t) {
         if(b.id == this.branchId) {
@@ -98,4 +98,7 @@ export class HomeComponent implements OnInit {
     return this.userService.isLoggedIn();
   }
   
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
+  }
 }

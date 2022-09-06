@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="text-center fade">Hi {{ username }}, Welcome to the Food-App</h1>
+  <h1 class="text-center fade">Hi {{ userService.getName() }}, Welcome to the Food App</h1>
 </div>
 <img class="bg-home fade" src="../assets/bghome.jpg"/>
 <h3 class="text-center fade heading" *ngIf="!isLoggedIn()">Login! to get started</h3>
@@ -47,7 +47,7 @@
 </marquee>
 
 <footer class="bg-light text-center text-lg-start fade" *ngIf="isLoggedIn()">
-  <Section class="bg-light text-center text-lg-start">
+  <Section class="bg-light text-center text-lg-start border-top border-danger border-3">
 
     <div class="text-center p-4 " *ngIf="checkAdmin">
       <div class="row justify-content-center">
@@ -119,7 +119,7 @@
 
   </Section>
 
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);" *ngIf="!checkAdmin">
+  <div class="text-center p-3 border-top border-dark border-3" style="background-color: rgba(0, 0, 0, 0.2);" *ngIf="!checkAdmin">
     {{currentBranch.id}}, {{currentBranch.name}}, {{currentBranch.city}}, {{currentBranch.phone}}
   </div>
 </footer>

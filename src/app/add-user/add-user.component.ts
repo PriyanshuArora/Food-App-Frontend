@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BranchService } from '../Services/branch.service';
 import { UserService } from '../Services/user.service';
 
@@ -9,7 +10,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css'],
 })
-export class AddUserComponent implements OnInit {
+export class AddUserComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private branchService: BranchService,
@@ -23,13 +24,14 @@ export class AddUserComponent implements OnInit {
   checkBranchManager = this.userService.isBranchManager();
   userRole = this.userService.getRole();
   branchId = this.userService.getBranch();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userRole == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
-    this.branchService.getBranchList().subscribe((data) => {
+    this.Subscription = this.branchService.getBranchList().subscribe((data) => {
       this.branchlist = data;
     });
   }
@@ -45,7 +47,7 @@ export class AddUserComponent implements OnInit {
       form.value.branch = this.branch;
     }
 
-    this.userService.addUser(form.value).subscribe(
+    this.Subscription = this.userService.addUser(form.value).subscribe(
       (res) => {
         if (this.userRole == 'Branch Manager') {
           window.alert('Staff added successfully!');
@@ -59,5 +61,9 @@ export class AddUserComponent implements OnInit {
         window.alert(err.error.message);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

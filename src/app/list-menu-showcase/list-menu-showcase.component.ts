@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { MenuService } from '../Services/menu.service';
 import { UserService } from '../Services/user.service';
 
@@ -8,7 +9,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './list-menu-showcase.component.html',
   styleUrls: ['./list-menu-showcase.component.css'],
 })
-export class ListMenuShowcaseComponent implements OnInit {
+export class ListMenuShowcaseComponent implements OnInit, OnDestroy {
   constructor(
     private menuService: MenuService,
     private userService: UserService
@@ -16,11 +17,15 @@ export class ListMenuShowcaseComponent implements OnInit {
   result: any;
   checkAdmin = this.userService.isAdmin();
   checkBranchManager = this.userService.isBranchManager();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
-    this.menuService.getMenuList().subscribe((data) => {
+    this.Subscription = this.menuService.getMenuList().subscribe((data) => {
       this.result = data;
-      console.log(this.result.t);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

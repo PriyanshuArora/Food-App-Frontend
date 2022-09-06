@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BranchService } from '../Services/branch.service';
 import { FoodService } from '../Services/food.service';
 import { FoodorderService } from '../Services/foodorder.service';
@@ -11,7 +12,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './edit-foodorder.component.html',
   styleUrls: ['./edit-foodorder.component.css'],
 })
-export class EditFoodorderComponent implements OnInit {
+export class EditFoodorderComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
@@ -26,7 +27,7 @@ export class EditFoodorderComponent implements OnInit {
   foodOrderList:any;
   selectedOrder:any;
   branch = { id: '' };
-  foods:any = [];
+  // foods:any = [];
   foodsTemp:any = [];
   foodlist: any;
   branchlist:any;
@@ -34,17 +35,18 @@ export class EditFoodorderComponent implements OnInit {
   checkAdmin = this.userService.isAdmin();
   userRole = this.userService.getRole();
   branchId = this.userService.getBranch();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
-    this.foodService.getFoodList().subscribe((data)=>{
+    this.Subscription = this.foodService.getFoodList().subscribe((data)=>{
       this.foodlist = data;
     })
-    this.branchService.getBranchList().subscribe((data)=>{
+    this.Subscription = this.branchService.getBranchList().subscribe((data)=>{
       this.branchlist = data;
     })
 
     let id=this.route.snapshot.params['id'];
-    this.orderService.getFoodOrderList().subscribe((data)=>{
+    this.Subscription = this.orderService.getFoodOrderList().subscribe((data)=>{
       this.foodOrderList = data;
       for(let r of this.foodOrderList.t) {
         if(r.id == id) {
@@ -81,30 +83,17 @@ export class EditFoodorderComponent implements OnInit {
   }
 
   // Method to delete foods from order
-  updateFood(id:any,quantity:any) {
-    
-  }
-
-  // Method to delete foods from order
   deleteFood(item:any) {
-    this.foodsTemp.splice(this.foodsTemp.indexOf(item), 1);
+    this.foodsTemp.splice(this.foodsTemp.findIndex((obj: { id: any; }) => obj.id == item.id), 1);
     for(let i = 0; i < item.quantity; i++) {   
-      if(this.selectedOrder.foods.indexOf(item)>-1) {
-        this.selectedOrder.foods.splice(this.foods.indexOf(item), 1);
+      if(this.selectedOrder.foods.findIndex((obj: { id: any; }) => obj.id == item.id)>-1) {
+        this.selectedOrder.foods.splice(this.selectedOrder.foods.findIndex((obj: { id: any; }) => obj.id == item.id), 1);
       }
     }
   }
 
   // Method to update food order
   updateFoodOrder(form: NgForm) {
-    // console.log(this.foodsTemp);
-    // for(let i of this.foodsTemp) {
-    //   console.log(i + "i");
-    //   for(let j = 0; j < i.quantity; j++) {
-    //     console.log(j + "j");
-    //     this.foods.push(Object.assign({}, i));
-    //   }
-    // }
     form.value.foods=this.selectedOrder.foods;
     if(this.userRole != "Admin") {
       this.branch.id = this.branchId;
@@ -114,14 +103,17 @@ export class EditFoodorderComponent implements OnInit {
       form.value.branch = this.branch;
     }
 
-    this.orderService.editFoodOrder(this.selectedOrder.id,form.value).subscribe((res)=>{
-      console.log(res);
+    this.Subscription = this.orderService.editFoodOrder(this.selectedOrder.id,form.value).subscribe((res)=>{
       window.alert("Food Order updated successfully!");
       this.router.navigate(['orderlist']);
     },(err)=>{
       console.log(err);
       window.alert(err.error.message);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 
 }

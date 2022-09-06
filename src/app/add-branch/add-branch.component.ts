@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BranchService } from '../Services/branch.service';
 import { UserService } from '../Services/user.service';
 
@@ -9,7 +10,7 @@ import { UserService } from '../Services/user.service';
   templateUrl: './add-branch.component.html',
   styleUrls: ['./add-branch.component.css'],
 })
-export class AddBranchComponent implements OnInit {
+export class AddBranchComponent implements OnInit, OnDestroy {
   constructor(
     private branchService: BranchService,
     private userService: UserService,
@@ -17,6 +18,7 @@ export class AddBranchComponent implements OnInit {
   ) {}
 
   userRole = this.userService.getRole();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userRole != 'Admin') {
@@ -26,8 +28,7 @@ export class AddBranchComponent implements OnInit {
   }
 
   addBranch(form: NgForm) {
-    console.log(form.value);
-    this.branchService.addBranch(form.value).subscribe(
+    this.Subscription = this.branchService.addBranch(form.value).subscribe(
       (res) => {
         window.alert('Branch added successfully!');
         this.router.navigate(['']);
@@ -37,5 +38,9 @@ export class AddBranchComponent implements OnInit {
         window.alert(err.error.message);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }

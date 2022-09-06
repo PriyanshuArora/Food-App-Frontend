@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BranchService } from '../Services/branch.service';
 import { UserService } from '../Services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.css'],
 })
-export class EditUserComponent implements OnInit {
+export class EditUserComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private branchService: BranchService,
@@ -27,18 +28,19 @@ export class EditUserComponent implements OnInit {
   checkBranchManager = this.userService.isBranchManager();
   userRole = this.userService.getRole();
   branchId = this.userService.getBranch();
+  Subscription: Subscription | undefined;
 
   ngOnInit(): void {
     if (this.userRole == 'Staff') {
       window.alert('You are not authorised to access this page.');
       this.router.navigate(['']);
     }
-    this.branchService.getBranchList().subscribe((data) => {
+    this.Subscription = this.branchService.getBranchList().subscribe((data) => {
       this.branchlist = data;
     });
 
     let id = this.route.snapshot.params['id'];
-    this.userService.getUserList().subscribe(
+    this.Subscription = this.userService.getUserList().subscribe(
       (data) => {
         this.userList = data;
         for (let r of this.userList.t) {
@@ -65,10 +67,9 @@ export class EditUserComponent implements OnInit {
       form.value.branch = this.branch;
     }
 
-    this.userService.editUser(this.selectedUser.id, form.value).subscribe(
+    this.Subscription = this.userService.editUser(this.selectedUser.id, form.value).subscribe(
       (res) => {
         window.alert("User updated successfully!");
-        console.log(res);
         this.router.navigate(['userlist']);
       },
       (err) => {
@@ -76,5 +77,9 @@ export class EditUserComponent implements OnInit {
         window.alert(err.error.message);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.Subscription?.unsubscribe();
   }
 }
